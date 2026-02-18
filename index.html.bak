@@ -1,0 +1,3937 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnHub</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Nunito:wght@800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #06080f;
+            --surface: #0d1120;
+            --surface2: #111827;
+            --border: rgba(255, 255, 255, 0.07);
+            --border-hover: rgba(99, 102, 241, 0.4);
+            --text: #f1f5f9;
+            --text-muted: #64748b;
+            --text-dim: #94a3b8;
+            --accent: #6366f1;
+            --accent2: #818cf8;
+            --accent-glow: rgba(99, 102, 241, 0.25);
+            --accent-subtle: rgba(99, 102, 241, 0.08);
+            --glass-bg: rgba(13, 17, 32, 0.6);
+            --glass-light: rgba(255, 255, 255, 0.04);
+            --nav-bg: rgba(6, 8, 15, 0.8);
+            --card-bg: rgba(13, 17, 32, 0.7);
+            --scrollbar: #1e2536;
+            --modal-bg: rgba(4, 5, 11, 0.95);
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        [data-theme="light"] {
+            --bg: #f0f2f8;
+            --surface: #ffffff;
+            --surface2: #f8fafc;
+            --border: rgba(0, 0, 0, 0.07);
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --text-dim: #475569;
+            --accent: #4f46e5;
+            --accent2: #6366f1;
+            --accent-glow: rgba(79, 70, 229, 0.15);
+            --accent-subtle: rgba(79, 70, 229, 0.06);
+            --glass-bg: rgba(255, 255, 255, 0.6);
+            --glass-light: rgba(255, 255, 255, 0.8);
+            --nav-bg: rgba(240, 242, 248, 0.85);
+            --card-bg: rgba(255, 255, 255, 0.7);
+            --scrollbar: #cbd5e1;
+            --modal-bg: rgba(240, 242, 248, 0.97);
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html {
+            scroll-behavior: smooth
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: background .4s, color .4s;
+            line-height: 1.6
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background: radial-gradient(ellipse 80% 50% at 20% -20%, rgba(99, 102, 241, .12) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 40% at 80% 100%, rgba(139, 92, 246, .08) 0%, transparent 60%);
+            animation: bgShift 12s ease-in-out infinite alternate
+        }
+
+        [data-theme="light"] body::before {
+            background: radial-gradient(ellipse 80% 50% at 20% -20%, rgba(99, 102, 241, .07) 0%, transparent 60%), radial-gradient(ellipse 60% 40% at 80% 100%, rgba(139, 92, 246, .05) 0%, transparent 60%)
+        }
+
+        @keyframes bgShift {
+            from {
+                opacity: 1
+            }
+
+            to {
+                opacity: .6
+            }
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: .025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+            background-size: 200px
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--nav-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-bottom: 1px solid var(--border);
+            transition: background .4s
+        }
+
+        .nav-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            height: 68px;
+            display: flex;
+            align-items: center;
+            gap: 20px
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            flex-shrink: 0;
+            cursor: pointer
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: #1a1a2e;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 4px 16px rgba(99, 102, 241, .2);
+            transition: transform .3s, box-shadow .3s;
+            overflow: hidden;
+            padding: 3px
+        }
+
+        [data-theme="light"] .logo-icon {
+            background: #ffffff;
+            box-shadow: 0 4px 16px rgba(99, 102, 241, .15)
+        }
+
+        .logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain
+        }
+
+        .logo:hover .logo-icon {
+            transform: rotate(-5deg) scale(1.05);
+            box-shadow: 0 6px 24px rgba(99, 102, 241, .5)
+        }
+
+        .logo-text {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: 1.65rem;
+            background: linear-gradient(135deg, var(--text) 0%, var(--text-dim) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -.5px
+        }
+
+        .search-wrap {
+            flex: 1;
+            max-width: 460px;
+            margin: 0 auto;
+            position: relative
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            pointer-events: none;
+            font-size: 15px
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 14px 10px 40px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            color: var(--text);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: .875rem;
+            outline: none;
+            transition: all .25s
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted)
+        }
+
+        .search-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+            background: var(--surface2)
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-shrink: 0
+        }
+
+        .count-badge {
+            font-size: .7rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 50px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            white-space: nowrap;
+            display: none
+        }
+
+        @media(min-width:640px) {
+            .count-badge {
+                display: block
+            }
+        }
+
+        .theme-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-dim);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            transition: all .25s;
+            flex-shrink: 0
+        }
+
+        .theme-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-subtle);
+            transform: rotate(15deg)
+        }
+
+        .auth-nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            padding: 7px 14px;
+            border-radius: 50px;
+            border: 1px solid var(--border);
+            background: var(--surface);
+            color: var(--text-dim);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: .8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .2s;
+            white-space: nowrap;
+            flex-shrink: 0
+        }
+
+        .auth-nav-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-subtle)
+        }
+
+        .auth-nav-btn.signed-in {
+            border-color: var(--success);
+            color: var(--success)
+        }
+
+        .auth-nav-btn.signed-in:hover {
+            background: rgba(16, 185, 129, .08)
+        }
+
+        .user-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #a78bfa);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 700;
+            color: white
+        }
+
+        /* Add Course Nav Button */
+        .add-course-nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 14px;
+            border-radius: 50px;
+            border: 1px solid rgba(16, 185, 129, .4);
+            background: rgba(16, 185, 129, .08);
+            color: #34d399;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: .8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .2s;
+            white-space: nowrap;
+            flex-shrink: 0
+        }
+
+        .add-course-nav-btn:hover {
+            border-color: #10b981;
+            background: rgba(16, 185, 129, .15);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(16, 185, 129, .2)
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            display: flex;
+            gap: 32px;
+            position: relative;
+            z-index: 1
+        }
+
+        aside {
+            width: 220px;
+            flex-shrink: 0
+        }
+
+        .sidebar-sticky {
+            position: sticky;
+            top: 88px
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding: 0 4px
+        }
+
+        .sidebar-label {
+            font-family: 'Syne', sans-serif;
+            font-size: .65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .12em;
+            color: var(--text-muted)
+        }
+
+        .collapse-btn {
+            display: none;
+            align-items: center;
+            gap: 5px;
+            font-size: .72rem;
+            font-weight: 500;
+            color: var(--accent);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 4px;
+            transition: background .2s
+        }
+
+        .collapse-btn:hover {
+            background: var(--accent-subtle)
+        }
+
+        .category-list {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            overflow: hidden;
+            transition: max-height .4s cubic-bezier(.4, 0, .2, 1), opacity .3s;
+            max-height: 2000px;
+            opacity: 1
+        }
+
+        .category-list.collapsed {
+            max-height: 0;
+            opacity: 0
+        }
+
+        .cat-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            width: 100%;
+            padding: 9px 12px;
+            border-radius: 10px;
+            border: 1px solid transparent;
+            background: none;
+            color: var(--text-dim);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: .825rem;
+            font-weight: 500;
+            cursor: pointer;
+            text-align: left;
+            transition: all .2s;
+            overflow: hidden
+        }
+
+        .cat-btn:hover {
+            color: var(--text);
+            background: var(--glass-light);
+            border-color: var(--border);
+            transform: translateX(3px)
+        }
+
+        .cat-btn.active {
+            background: linear-gradient(135deg, var(--cat-color, var(--accent)), var(--cat-color-dark, #7c3aed));
+            color: #fff;
+            border-color: transparent;
+            box-shadow: 0 4px 16px var(--cat-color-glow, rgba(99, 102, 241, .35));
+            transform: translateX(3px)
+        }
+
+        .cat-btn .cat-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--cat-color, var(--accent));
+            opacity: .8;
+            flex-shrink: 0;
+            transition: transform .2s
+        }
+
+        .cat-btn.active .cat-dot {
+            opacity: 1;
+            background: #fff;
+            transform: scale(1.2)
+        }
+
+        .cat-count {
+            margin-left: auto;
+            font-size: .65rem;
+            background: var(--cat-color-subtle, var(--accent-subtle));
+            color: var(--cat-color, var(--accent2));
+            padding: 1px 6px;
+            border-radius: 50px;
+            font-weight: 600
+        }
+
+        .cat-btn.active .cat-count {
+            background: rgba(255, 255, 255, .2);
+            color: #fff
+        }
+
+        .sidebar-section {
+            background: var(--glass-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 16px;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px)
+        }
+
+        [data-theme="light"] .sidebar-section {
+            background: rgba(255, 255, 255, .6)
+        }
+
+        .mobile-search {
+            display: none;
+            margin-bottom: 20px;
+            position: relative
+        }
+
+        main {
+            flex: 1;
+            min-width: 0
+        }
+
+        .main-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px
+        }
+
+        .main-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -.5px;
+            background: linear-gradient(135deg, var(--text) 0%, var(--text-dim) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text
+        }
+
+        .results-count {
+            font-size: .8rem;
+            color: var(--text-muted);
+            font-weight: 500
+        }
+
+        .pulse-bar {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            background-size: 200% 100%;
+            animation: pulse-scan 3s linear infinite;
+            opacity: .5;
+            margin-bottom: 28px
+        }
+
+        @keyframes pulse-scan {
+            0% {
+                background-position: -100% 0
+            }
+
+            100% {
+                background-position: 200% 0
+            }
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            cursor: pointer;
+            transition: all .35s cubic-bezier(.4, 0, .2, 1);
+            backdrop-filter: blur(16px);
+            opacity: 0;
+            transform: translateY(24px);
+            animation: cardIn .5s forwards;
+            position: relative
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 18px;
+            padding: 1px;
+            background: linear-gradient(135deg, transparent, transparent);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity .3s;
+            pointer-events: none;
+            z-index: 2
+        }
+
+        .card:hover::before {
+            background: linear-gradient(135deg, var(--accent), #a78bfa);
+            opacity: 1
+        }
+
+        @keyframes cardIn {
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+
+        .card:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, .3), 0 -4px 24px var(--accent-glow);
+            transform: translateY(-6px) scale(1.01)
+        }
+
+        .card-progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--border);
+            z-index: 1;
+            border-radius: 0 0 18px 18px;
+            overflow: hidden
+        }
+
+        .card-progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #a78bfa);
+            transition: width .4s
+        }
+
+        .completed-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 4;
+            background: var(--success);
+            color: white;
+            font-size: .6rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 50px;
+            display: none;
+            letter-spacing: .05em;
+            text-transform: uppercase
+        }
+
+        .completed-badge.visible {
+            display: block
+        }
+
+        .thumb {
+            position: relative;
+            aspect-ratio: 16/9;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0d1120 0%, #1e1b4b 50%, #0d1120 100%)
+        }
+
+        [data-theme="light"] .thumb {
+            background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 50%, #ddd6fe 100%)
+        }
+
+        .thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform .6s cubic-bezier(.4, 0, .2, 1), filter .4s;
+            filter: brightness(.9) saturate(1.05)
+        }
+
+        .card:hover .thumb img {
+            transform: scale(1.08);
+            filter: brightness(1.05) saturate(1.15)
+        }
+
+        .thumb-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(6, 8, 15, .85) 0%, rgba(6, 8, 15, .1) 60%, transparent 100%)
+        }
+
+        [data-theme="light"] .thumb-overlay {
+            background: linear-gradient(to top, rgba(15, 23, 42, .7) 0%, rgba(15, 23, 42, .05) 60%, transparent 100%)
+        }
+
+        .play-btn {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity .3s;
+            z-index: 3
+        }
+
+        .card:hover .play-btn {
+            opacity: 1
+        }
+
+        .play-circle {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, .9);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 32px rgba(99, 102, 241, .5);
+            transition: transform .2s;
+            transform: scale(.8)
+        }
+
+        .card:hover .play-circle {
+            transform: scale(1)
+        }
+
+        .play-circle:hover {
+            transform: scale(1.1) !important;
+            box-shadow: 0 12px 40px rgba(99, 102, 241, .7) !important
+        }
+
+        .play-icon {
+            width: 0;
+            height: 0;
+            border-top: 9px solid transparent;
+            border-bottom: 9px solid transparent;
+            border-left: 15px solid white;
+            margin-left: 3px
+        }
+
+        .thumb-tag {
+            position: absolute;
+            bottom: 12px;
+            left: 12px;
+            font-size: .65rem;
+            font-weight: 700;
+            padding: 4px 10px;
+            border-radius: 6px;
+            backdrop-filter: blur(8px);
+            z-index: 2;
+            letter-spacing: .05em;
+            text-transform: uppercase;
+            background: var(--cat-color-bg, rgba(6, 8, 15, .7));
+            color: var(--cat-color-text, #fff);
+            border: 1px solid var(--cat-color-border, rgba(255, 255, 255, .15))
+        }
+
+        .card-body {
+            flex: 1;
+            padding: 18px 18px 20px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            z-index: 2
+        }
+
+        .card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 8px
+        }
+
+        .card-title {
+            font-family: 'Syne', sans-serif;
+            font-size: .95rem;
+            font-weight: 700;
+            line-height: 1.35;
+            color: var(--text);
+            transition: color .2s;
+            letter-spacing: -.2px
+        }
+
+        .card:hover .card-title {
+            color: var(--accent2)
+        }
+
+        .card-icon {
+            font-size: 16px;
+            flex-shrink: 0;
+            opacity: .35;
+            transition: opacity .2s;
+            margin-top: 2px
+        }
+
+        .card:hover .card-icon {
+            opacity: .7
+        }
+
+        .card-desc {
+            font-size: .8rem;
+            color: var(--text-muted);
+            line-height: 1.55;
+            flex: 1;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 3;
+            overflow: hidden;
+            margin-bottom: 14px
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border)
+        }
+
+        .watch-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            padding: 9px 16px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, var(--accent), #7c3aed);
+            color: #fff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: .8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .25s
+        }
+
+        .watch-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, .45)
+        }
+
+        .ext-btn {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all .2s
+        }
+
+        .ext-btn:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+            background: var(--accent-subtle)
+        }
+
+        .progress-actions {
+            display: flex;
+            gap: 6px;
+            padding-top: 8px;
+            position: relative;
+            z-index: 2
+        }
+
+        .prog-btn {
+            flex: 1;
+            padding: 6px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            font-size: .7rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .2s;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px
+        }
+
+        .prog-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-subtle)
+        }
+
+        .prog-btn.done {
+            border-color: var(--success);
+            color: var(--success);
+            background: rgba(16, 185, 129, .08)
+        }
+
+        .prog-btn.in-progress {
+            border-color: var(--warning);
+            color: var(--warning);
+            background: rgba(245, 158, 11, .08)
+        }
+
+        .empty {
+            grid-column: 1/-1;
+            text-align: center;
+            padding: 80px 20px;
+            background: var(--surface);
+            border-radius: 20px;
+            border: 1px dashed var(--border)
+        }
+
+        .empty-icon {
+            font-size: 40px;
+            margin-bottom: 12px
+        }
+
+        .empty h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1rem;
+            margin-bottom: 6px;
+            color: var(--text)
+        }
+
+        .empty p {
+            font-size: .8rem;
+            color: var(--text-muted)
+        }
+
+        /* ── METRICS BANNER ── */
+        .metrics-banner {
+            margin: 0 0 28px 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px
+        }
+
+        .metrics-banner.has-progress {
+            grid-template-columns: repeat(3, 1fr)
+        }
+
+        .metric-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color .2s, box-shadow .2s
+        }
+
+        .metric-card:hover {
+            border-color: var(--border-hover);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, .2)
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: .04;
+            pointer-events: none
+        }
+
+        .metric-card.mc-courses::before {
+            background: radial-gradient(circle at 0% 50%, var(--accent) 0%, transparent 70%)
+        }
+
+        .metric-card.mc-hours::before {
+            background: radial-gradient(circle at 0% 50%, #f59e0b 0%, transparent 70%)
+        }
+
+        .metric-card.mc-progress::before {
+            background: radial-gradient(circle at 0% 50%, #10b981 0%, transparent 70%)
+        }
+
+        .metric-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0
+        }
+
+        .mc-courses .metric-icon {
+            background: rgba(99, 102, 241, .15)
+        }
+
+        .mc-hours .metric-icon {
+            background: rgba(245, 158, 11, .15)
+        }
+
+        .mc-progress .metric-icon {
+            background: rgba(16, 185, 129, .15)
+        }
+
+        .metric-body {
+            flex: 1;
+            min-width: 0
+        }
+
+        .metric-value {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1;
+            letter-spacing: -.5px;
+            margin-bottom: 3px
+        }
+
+        .mc-courses .metric-value {
+            color: var(--accent2)
+        }
+
+        .mc-hours .metric-value {
+            color: #fbbf24
+        }
+
+        .mc-progress .metric-value {
+            color: #34d399
+        }
+
+        .metric-label {
+            font-size: .72rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: .08em
+        }
+
+        .metric-sub {
+            font-size: .7rem;
+            color: var(--text-muted);
+            margin-top: 2px
+        }
+
+        .metric-prog-track {
+            height: 4px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 6px
+        }
+
+        .metric-prog-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #10b981, #34d399);
+            border-radius: 4px;
+            transition: width .8s cubic-bezier(.4, 0, .2, 1)
+        }
+
+        /* ── DURATION BADGE on cards ── */
+        .dur-badge {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            font-size: .62rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(6, 8, 15, .75);
+            color: rgba(255, 255, 255, .85);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, .1);
+            z-index: 3;
+            letter-spacing: .03em;
+            display: flex;
+            align-items: center;
+            gap: 4px
+        }
+
+        [data-theme="light"] .dur-badge {
+            background: rgba(15, 23, 42, .65);
+            color: rgba(255, 255, 255, .9)
+        }
+
+        @media(max-width:700px) {
+
+            .metrics-banner,
+            .metrics-banner.has-progress {
+                grid-template-columns: 1fr;
+                gap: 10px
+            }
+
+            .metric-card {
+                padding: 14px 16px
+            }
+
+            .metric-value {
+                font-size: 1.25rem
+            }
+        }
+
+        /* VIDEO MODAL */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: var(--modal-bg);
+            backdrop-filter: blur(24px) saturate(150%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .3s
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: all
+        }
+
+        .modal-box {
+            width: 100%;
+            max-width: 900px;
+            background: var(--surface);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, .5);
+            transform: scale(.92) translateY(20px);
+            transition: transform .35s cubic-bezier(.34, 1.56, .64, 1)
+        }
+
+        .modal-overlay.open .modal-box {
+            transform: scale(1) translateY(0)
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border)
+        }
+
+        .modal-title {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: .9rem;
+            color: var(--text);
+            flex: 1;
+            margin-right: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .modal-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-dim);
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .2s;
+            line-height: 1;
+            flex-shrink: 0
+        }
+
+        .modal-close:hover {
+            background: #ef4444;
+            border-color: #ef4444;
+            color: white;
+            transform: rotate(90deg)
+        }
+
+        .modal-video {
+            aspect-ratio: 16/9;
+            width: 100%;
+            background: #000
+        }
+
+        .modal-video iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block
+        }
+
+        .modal-footer {
+            padding: 14px 20px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px
+        }
+
+        .modal-footer-label {
+            font-size: .8rem;
+            color: var(--text-muted);
+            flex: 1
+        }
+
+        .modal-prog-btns {
+            display: flex;
+            gap: 8px
+        }
+
+        .modal-prog-btn {
+            padding: 7px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            font-size: .75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .2s;
+            font-family: 'Plus Jakarta Sans', sans-serif
+        }
+
+        .modal-prog-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-subtle)
+        }
+
+        .modal-prog-btn.active-in-progress {
+            border-color: var(--warning);
+            color: var(--warning);
+            background: rgba(245, 158, 11, .1)
+        }
+
+        .modal-prog-btn.active-completed {
+            border-color: var(--success);
+            color: var(--success);
+            background: rgba(16, 185, 129, .1)
+        }
+
+        .no-auth-msg {
+            font-size: .75rem;
+            color: var(--text-muted);
+            font-style: italic
+        }
+
+        /* AUTH MODAL */
+        .auth-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            background: rgba(2, 3, 8, .88);
+            backdrop-filter: blur(32px) saturate(140%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .35s ease
+        }
+
+        .auth-modal.open {
+            opacity: 1;
+            pointer-events: all
+        }
+
+        .auth-box {
+            width: 100%;
+            max-width: 780px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: var(--surface);
+            border-radius: 28px;
+            overflow: hidden;
+            border: 2px solid var(--border);
+            box-shadow: 0 48px 96px rgba(0, 0, 0, .65), 0 0 0 1px rgba(99, 102, 241, .08);
+            transform: scale(.93) translateY(28px);
+            transition: transform .45s cubic-bezier(.34, 1.4, .64, 1);
+            position: relative;
+            min-height: 520px
+        }
+
+        .auth-modal.open .auth-box {
+            transform: scale(1) translateY(0)
+        }
+
+        .auth-panel-left {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(145deg, #0a0c1a 0%, #0f1035 40%, #130d2e 100%);
+            padding: 44px 36px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between
+        }
+
+        .auth-panel-left::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse 120% 80% at 30% 110%, rgba(99, 102, 241, .28) 0%, transparent 60%), radial-gradient(ellipse 80% 60% at 80% -10%, rgba(139, 92, 246, .2) 0%, transparent 55%);
+            pointer-events: none
+        }
+
+        .auth-orbs {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden
+        }
+
+        .auth-orb {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(99, 102, 241, .15)
+        }
+
+        .auth-orb-1 {
+            width: 280px;
+            height: 280px;
+            top: -60px;
+            right: -80px;
+            animation: orbSpin1 18s linear infinite
+        }
+
+        .auth-orb-2 {
+            width: 180px;
+            height: 180px;
+            top: 10px;
+            right: -30px;
+            border-color: rgba(167, 139, 250, .12);
+            animation: orbSpin2 12s linear infinite reverse
+        }
+
+        .auth-orb-3 {
+            width: 400px;
+            height: 400px;
+            bottom: -160px;
+            left: -100px;
+            border-color: rgba(99, 102, 241, .06);
+            animation: orbSpin1 28s linear infinite
+        }
+
+        @keyframes orbSpin1 {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        @keyframes orbSpin2 {
+            to {
+                transform: rotate(-360deg)
+            }
+        }
+
+        .auth-dot {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(99, 102, 241, .5);
+            animation: dotFloat 4s ease-in-out infinite
+        }
+
+        .auth-dot:nth-child(1) {
+            width: 4px;
+            height: 4px;
+            top: 22%;
+            left: 18%;
+            animation-delay: 0s
+        }
+
+        .auth-dot:nth-child(2) {
+            width: 3px;
+            height: 3px;
+            top: 55%;
+            left: 70%;
+            animation-delay: .8s;
+            background: rgba(167, 139, 250, .6)
+        }
+
+        .auth-dot:nth-child(3) {
+            width: 5px;
+            height: 5px;
+            top: 75%;
+            left: 30%;
+            animation-delay: 1.6s;
+            background: rgba(34, 211, 238, .4)
+        }
+
+        .auth-dot:nth-child(4) {
+            width: 3px;
+            height: 3px;
+            top: 38%;
+            left: 58%;
+            animation-delay: 2.4s
+        }
+
+        @keyframes dotFloat {
+
+            0%,
+            100% {
+                transform: translateY(0);
+                opacity: .5
+            }
+
+            50% {
+                transform: translateY(-10px);
+                opacity: 1
+            }
+        }
+
+        .auth-left-brand {
+            position: relative;
+            z-index: 1
+        }
+
+        .auth-left-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 32px
+        }
+
+        .auth-left-logo-icon {
+            width: 38px;
+            height: 38px;
+            background: #1a1a2e;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 19px;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, .3);
+            overflow: hidden;
+            padding: 4px
+        }
+
+        .auth-left-logo-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain
+        }
+
+        .auth-left-logo-text {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: #fff;
+            letter-spacing: -.3px
+        }
+
+        .auth-left-headline {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.55rem;
+            font-weight: 800;
+            color: #fff;
+            line-height: 1.25;
+            letter-spacing: -.5px;
+            margin-bottom: 10px
+        }
+
+        .auth-left-headline span {
+            background: linear-gradient(135deg, #a78bfa, #60a5fa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text
+        }
+
+        .auth-left-sub {
+            font-size: .8rem;
+            color: rgba(255, 255, 255, .4);
+            line-height: 1.6;
+            max-width: 200px
+        }
+
+        .auth-features {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 9px
+        }
+
+        .auth-feature {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, .04);
+            border: 1px solid rgba(255, 255, 255, .07)
+        }
+
+        .auth-feature-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0
+        }
+
+        .auth-feature-text strong {
+            color: rgba(255, 255, 255, .85);
+            font-weight: 600;
+            display: block;
+            font-size: .78rem
+        }
+
+        .auth-feature-text span {
+            font-size: .71rem;
+            color: rgba(255, 255, 255, .45)
+        }
+
+        .auth-panel-right {
+            padding: 44px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            background: var(--surface);
+            position: relative
+        }
+
+        .auth-close-btn {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 32px;
+            height: 32px;
+            border-radius: 9px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            transition: all .2s;
+            z-index: 5;
+            line-height: 1
+        }
+
+        .auth-close-btn:hover {
+            background: var(--danger);
+            border-color: var(--danger);
+            color: white;
+            transform: rotate(90deg)
+        }
+
+        .auth-right-header {
+            margin-bottom: 24px
+        }
+
+        .auth-right-eyebrow {
+            font-size: .66rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .14em;
+            color: var(--accent2);
+            margin-bottom: 6px
+        }
+
+        .auth-right-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--text);
+            letter-spacing: -.4px;
+            line-height: 1.2
+        }
+
+        .auth-right-sub {
+            font-size: .78rem;
+            color: var(--text-muted);
+            margin-top: 5px;
+            line-height: 1.5
+        }
+
+        .auth-segment {
+            display: flex;
+            background: var(--surface2);
+            border-radius: 12px;
+            padding: 3px;
+            margin-bottom: 22px;
+            gap: 2px;
+            border: 1px solid var(--border)
+        }
+
+        .auth-seg-btn {
+            flex: 1;
+            padding: 8px;
+            border-radius: 10px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: .8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .22s
+        }
+
+        .auth-seg-btn.active {
+            background: linear-gradient(135deg, var(--accent), #7c3aed);
+            color: #fff;
+            box-shadow: 0 3px 12px rgba(99, 102, 241, .4)
+        }
+
+        .auth-seg-btn:hover:not(.active) {
+            color: var(--text-dim);
+            background: var(--glass-light)
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 14px
+        }
+
+        .auth-field {
+            position: relative
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 22px 14px 6px;
+            height: 54px;
+            background: var(--surface2);
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: .88rem;
+            outline: none;
+            transition: border-color .22s, background .22s, box-shadow .22s;
+            position: relative;
+            z-index: 1
+        }
+
+        .auth-input:focus {
+            border-color: var(--accent);
+            background: var(--surface);
+            box-shadow: 0 0 0 3px var(--accent-glow)
+        }
+
+        .auth-input:focus~.auth-label,
+        .auth-input:not(:placeholder-shown)~.auth-label {
+            top: 10px;
+            font-size: .68rem;
+            color: var(--accent2);
+            letter-spacing: .03em
+        }
+
+        .auth-label {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: .88rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            pointer-events: none;
+            transform-origin: left top;
+            transition: top .18s cubic-bezier(.4, 0, .2, 1), font-size .18s cubic-bezier(.4, 0, .2, 1), color .18s;
+            z-index: 2;
+            background: transparent;
+            line-height: 1
+        }
+
+        .password-wrap {
+            position: relative
+        }
+
+        .password-wrap .auth-input {
+            padding-right: 46px
+        }
+
+        .auth-input[type="password"]::-ms-reveal,
+        .auth-input[type="password"]::-ms-clear {
+            display: none !important;
+            visibility: hidden !important;
+            pointer-events: none !important;
+            width: 0 !important;
+            height: 0 !important
+        }
+
+        .pw-toggle {
+            position: absolute;
+            right: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            outline: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 16px;
+            padding: 0;
+            margin: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            transition: color .2s;
+            -webkit-appearance: none;
+            appearance: none;
+            z-index: 3
+        }
+
+        .pw-toggle:hover {
+            color: var(--accent2)
+        }
+
+        .pw-strength {
+            display: flex;
+            gap: 3px;
+            margin-top: -6px
+        }
+
+        .pw-strength-bar {
+            flex: 1;
+            height: 2px;
+            border-radius: 2px;
+            background: var(--border);
+            transition: background .3s
+        }
+
+        .pw-strength-bar.weak {
+            background: #ef4444
+        }
+
+        .pw-strength-bar.fair {
+            background: #f59e0b
+        }
+
+        .pw-strength-bar.good {
+            background: #10b981
+        }
+
+        .pw-strength-bar.strong {
+            background: var(--accent)
+        }
+
+        .auth-msg {
+            padding: 10px 13px;
+            border-radius: 10px;
+            font-size: .77rem;
+            font-weight: 500;
+            display: none;
+            line-height: 1.5
+        }
+
+        .auth-msg.success {
+            background: rgba(16, 185, 129, .1);
+            border: 1px solid rgba(16, 185, 129, .25);
+            color: #6ee7b7;
+            display: block
+        }
+
+        .auth-msg.error {
+            background: rgba(239, 68, 68, .1);
+            border: 1px solid rgba(239, 68, 68, .25);
+            color: #fca5a5;
+            display: block
+        }
+
+        .auth-submit {
+            width: 100%;
+            padding: 13px;
+            border-radius: 12px;
+            border: none;
+            background: linear-gradient(135deg, var(--accent) 0%, #7c3aed 100%);
+            color: white;
+            font-family: 'Syne', sans-serif;
+            font-size: .88rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .25s;
+            margin-top: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 46px;
+            letter-spacing: .02em;
+            position: relative;
+            overflow: hidden
+        }
+
+        .auth-submit::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, .12), transparent);
+            opacity: 0;
+            transition: opacity .25s
+        }
+
+        .auth-submit:hover::after {
+            opacity: 1
+        }
+
+        .auth-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(99, 102, 241, .5)
+        }
+
+        .auth-submit:active {
+            transform: translateY(0)
+        }
+
+        .auth-submit:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none
+        }
+
+        .auth-switch {
+            text-align: center;
+            font-size: .75rem;
+            color: var(--text-muted);
+            margin-top: 14px
+        }
+
+        .auth-switch a {
+            color: var(--accent2);
+            text-decoration: none;
+            font-weight: 700
+        }
+
+        .auth-switch a:hover {
+            text-decoration: underline
+        }
+
+        @media(max-width:640px) {
+            .auth-box {
+                grid-template-columns: 1fr;
+                max-width: 400px
+            }
+
+            .auth-panel-left {
+                display: none
+            }
+
+            .auth-panel-right {
+                padding: 36px 28px 28px
+            }
+        }
+
+        /* ACCOUNT PANEL — wider */
+        .account-panel {
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 520px;
+            z-index: 250;
+            background: var(--surface);
+            border-left: 2px solid var(--border);
+            box-shadow: -20px 0 60px rgba(0, 0, 0, .4);
+            transform: translateX(100%);
+            transition: transform .4s cubic-bezier(.4, 0, .2, 1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden
+        }
+
+        .account-panel.open {
+            transform: translateX(0)
+        }
+
+        .account-panel-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 249;
+            background: rgba(0, 0, 0, .5);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .3s
+        }
+
+        .account-panel-overlay.open {
+            opacity: 1;
+            pointer-events: all
+        }
+
+        .panel-header {
+            padding: 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex-shrink: 0
+        }
+
+        .panel-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #a78bfa);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 800;
+            color: white;
+            flex-shrink: 0
+        }
+
+        .panel-user-info {
+            flex: 1;
+            min-width: 0
+        }
+
+        .panel-user-name {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            color: var(--text)
+        }
+
+        .panel-user-email {
+            font-size: .78rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis
+        }
+
+        .panel-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: all .2s
+        }
+
+        .panel-close:hover {
+            background: var(--danger);
+            border-color: var(--danger);
+            color: white
+        }
+
+        .panel-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px
+        }
+
+        .stat-card {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 14px;
+            text-align: center
+        }
+
+        .stat-value {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--text);
+            line-height: 1;
+            margin-bottom: 4px
+        }
+
+        .stat-label {
+            font-size: .68rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: .06em
+        }
+
+        .stat-card.completed .stat-value {
+            color: var(--success)
+        }
+
+        .stat-card.in-progress .stat-value {
+            color: var(--warning)
+        }
+
+        .stat-card.total .stat-value {
+            color: var(--accent2)
+        }
+
+        .progress-overview {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px
+        }
+
+        .progress-ring-wrap {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            flex-shrink: 0
+        }
+
+        .progress-ring {
+            transform: rotate(-90deg)
+        }
+
+        .ring-bg {
+            fill: none;
+            stroke: var(--border);
+            stroke-width: 6
+        }
+
+        .ring-fill {
+            fill: none;
+            stroke: var(--accent);
+            stroke-width: 6;
+            stroke-linecap: round;
+            transition: stroke-dashoffset .8s
+        }
+
+        .ring-text {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text)
+        }
+
+        .progress-overview-title {
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: .95rem;
+            color: var(--text);
+            margin-bottom: 4px
+        }
+
+        .progress-overview-sub {
+            font-size: .78rem;
+            color: var(--text-muted);
+            line-height: 1.5
+        }
+
+        .panel-section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: .7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: .1em;
+            color: var(--text-muted);
+            margin-bottom: 10px
+        }
+
+        .panel-course-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px
+        }
+
+        .panel-course-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 12px;
+            border-radius: 12px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            transition: border-color .2s
+        }
+
+        .panel-course-item:hover {
+            border-color: var(--accent-subtle)
+        }
+
+        .panel-course-thumb {
+            width: 56px;
+            height: 40px;
+            border-radius: 6px;
+            object-fit: cover;
+            background: var(--surface);
+            flex-shrink: 0
+        }
+
+        .panel-course-info {
+            flex: 1;
+            min-width: 0
+        }
+
+        .panel-course-title {
+            font-size: .8rem;
+            font-weight: 600;
+            color: var(--text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 2px
+        }
+
+        .panel-course-cat {
+            font-size: .65rem;
+            color: var(--text-muted)
+        }
+
+        .panel-course-status {
+            font-size: .6rem;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 50px;
+            text-transform: uppercase;
+            letter-spacing: .05em;
+            flex-shrink: 0
+        }
+
+        .status-completed {
+            background: rgba(16, 185, 129, .15);
+            color: #6ee7b7
+        }
+
+        .status-in-progress {
+            background: rgba(245, 158, 11, .15);
+            color: #fcd34d
+        }
+
+        .cat-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 8px
+        }
+
+        .cat-bar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 4px
+        }
+
+        .cat-bar-name {
+            font-size: .75rem;
+            font-weight: 600;
+            color: var(--text-dim)
+        }
+
+        .cat-bar-frac {
+            font-size: .68rem;
+            color: var(--text-muted)
+        }
+
+        .cat-bar-track {
+            height: 5px;
+            background: var(--border);
+            border-radius: 50px;
+            overflow: hidden
+        }
+
+        .cat-bar-fill {
+            height: 100%;
+            border-radius: 50px;
+            transition: width .8s
+        }
+
+        .panel-signout {
+            margin-top: auto;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(239, 68, 68, .3);
+            background: rgba(239, 68, 68, .06);
+            color: #fca5a5;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: .83rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .2s;
+            width: 100%
+        }
+
+        .panel-signout:hover {
+            background: rgba(239, 68, 68, .15);
+            border-color: rgba(239, 68, 68, .6)
+        }
+
+        /* ── ADD COURSE MODAL ── */
+        .add-course-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 350;
+            background: rgba(2, 3, 8, .9);
+            backdrop-filter: blur(32px) saturate(140%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .35s ease
+        }
+
+        .add-course-modal.open {
+            opacity: 1;
+            pointer-events: all
+        }
+
+        .add-course-box {
+            width: 100%;
+            max-width: 620px;
+            background: var(--surface);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, .6);
+            transform: scale(.93) translateY(24px);
+            transition: transform .4s cubic-bezier(.34, 1.4, .64, 1);
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column
+        }
+
+        .add-course-modal.open .add-course-box {
+            transform: scale(1) translateY(0)
+        }
+
+        .add-course-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px 28px;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0
+        }
+
+        .add-course-title {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.1rem;
+            color: var(--text)
+        }
+
+        .add-course-body {
+            padding: 24px 28px;
+            overflow-y: auto;
+            flex: 1
+        }
+
+        .add-course-footer {
+            padding: 16px 28px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+            flex-shrink: 0
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px
+        }
+
+        .form-row.single {
+            grid-template-columns: 1fr
+        }
+
+        .field-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px
+        }
+
+        .field-label {
+            font-size: .75rem;
+            font-weight: 600;
+            color: var(--text-dim);
+            letter-spacing: .03em;
+            text-transform: uppercase
+        }
+
+        .field-input {
+            width: 100%;
+            padding: 10px 14px;
+            background: var(--surface2);
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            color: var(--text);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: .875rem;
+            outline: none;
+            transition: border-color .22s, box-shadow .22s
+        }
+
+        .field-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--accent-glow)
+        }
+
+        .field-input::placeholder {
+            color: var(--text-muted)
+        }
+
+        textarea.field-input {
+            resize: vertical;
+            min-height: 90px;
+            line-height: 1.6;
+            padding: 12px 14px
+        }
+
+        select.field-input {
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%2364748b' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 12px center
+        }
+
+        .yt-preview {
+            margin-top: 10px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            background: var(--surface2);
+            display: none
+        }
+
+        .yt-preview.visible {
+            display: block
+        }
+
+        .yt-preview img {
+            width: 100%;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            display: block
+        }
+
+        .yt-preview-info {
+            padding: 10px 12px;
+            font-size: .75rem;
+            color: var(--text-muted)
+        }
+
+        .btn-cancel {
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-muted);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: .83rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all .2s
+        }
+
+        .btn-cancel:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-subtle)
+        }
+
+        .btn-save {
+            padding: 10px 24px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(135deg, var(--accent), #7c3aed);
+            color: #fff;
+            font-family: 'Syne', sans-serif;
+            font-size: .85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all .25s;
+            display: flex;
+            align-items: center;
+            gap: 8px
+        }
+
+        .btn-save:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, .4)
+        }
+
+        .btn-save:disabled {
+            opacity: .5;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none
+        }
+
+        .add-form-msg {
+            padding: 10px 13px;
+            border-radius: 10px;
+            font-size: .77rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+            line-height: 1.5;
+            display: none
+        }
+
+        .add-form-msg.success {
+            background: rgba(16, 185, 129, .1);
+            border: 1px solid rgba(16, 185, 129, .25);
+            color: #6ee7b7;
+            display: block
+        }
+
+        .add-form-msg.error {
+            background: rgba(239, 68, 68, .1);
+            border: 1px solid rgba(239, 68, 68, .25);
+            color: #fca5a5;
+            display: block
+        }
+
+        .icon-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-top: 4px
+        }
+
+        .icon-opt {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            background: var(--surface2);
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all .2s
+        }
+
+        .icon-opt:hover {
+            border-color: var(--accent);
+            background: var(--accent-subtle)
+        }
+
+        .icon-opt.selected {
+            border-color: var(--accent);
+            background: var(--accent-subtle);
+            box-shadow: 0 0 0 2px var(--accent-glow)
+        }
+
+        .loading-bar {
+            width: 100%;
+            height: 3px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 8px;
+            display: none
+        }
+
+        .loading-bar.visible {
+            display: block
+        }
+
+        .loading-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent), #a78bfa);
+            animation: loadSlide 1.2s ease-in-out infinite
+        }
+
+        @keyframes loadSlide {
+            0% {
+                width: 0;
+                margin-left: 0
+            }
+
+            50% {
+                width: 60%;
+                margin-left: 20%
+            }
+
+            100% {
+                width: 0;
+                margin-left: 100%
+            }
+        }
+
+        /* OFFLINE BANNER */
+        .offline-banner {
+            display: none;
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 500;
+            background: rgba(245, 158, 11, .95);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: .78rem;
+            font-weight: 600;
+            white-space: nowrap;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, .3);
+            backdrop-filter: blur(8px);
+            gap: 8px;
+            align-items: center
+        }
+
+        .offline-banner.visible {
+            display: flex
+        }
+
+        /* TOAST */
+        .toast-wrap {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 400;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            pointer-events: none
+        }
+
+        .toast {
+            padding: 12px 18px;
+            border-radius: 12px;
+            font-size: .82rem;
+            font-weight: 600;
+            color: white;
+            backdrop-filter: blur(12px);
+            pointer-events: all;
+            transform: translateX(120%);
+            transition: transform .35s cubic-bezier(.34, 1.56, .64, 1);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            max-width: 300px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .3)
+        }
+
+        .toast.show {
+            transform: translateX(0)
+        }
+
+        .toast.t-success {
+            background: rgba(16, 185, 129, .95)
+        }
+
+        .toast.t-info {
+            background: rgba(99, 102, 241, .95)
+        }
+
+        .toast.t-error {
+            background: rgba(239, 68, 68, .95)
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--scrollbar);
+            border-radius: 3px
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent)
+        }
+
+        @media(max-width:900px) {
+            .container {
+                flex-direction: column;
+                gap: 0
+            }
+
+            aside {
+                width: 100%
+            }
+
+            .sidebar-sticky {
+                position: static
+            }
+
+            .collapse-btn {
+                display: flex
+            }
+
+            .category-list {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 6px
+            }
+
+            .cat-btn {
+                width: auto;
+                font-size: .75rem;
+                padding: 6px 12px;
+                border: 1px solid var(--border)
+            }
+
+            .cat-btn:hover,
+            .cat-btn.active {
+                transform: none
+            }
+
+            .sidebar-section {
+                margin-bottom: 24px
+            }
+        }
+
+        @media(max-width:640px) {
+            .nav-inner {
+                padding: 0 16px
+            }
+
+            .search-wrap {
+                display: none
+            }
+
+            .mobile-search {
+                display: block
+            }
+
+            .container {
+                padding: 20px 16px
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 16px
+            }
+
+            .count-badge {
+                display: none !important
+            }
+
+            .account-panel {
+                width: 100%
+            }
+
+            .add-course-nav-btn span {
+                display: none
+            }
+
+            .form-row {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .card:nth-child(1) {
+            animation-delay: .05s
+        }
+
+        .card:nth-child(2) {
+            animation-delay: .1s
+        }
+
+        .card:nth-child(3) {
+            animation-delay: .15s
+        }
+
+        .card:nth-child(4) {
+            animation-delay: .2s
+        }
+
+        .card:nth-child(5) {
+            animation-delay: .25s
+        }
+
+        .card:nth-child(6) {
+            animation-delay: .3s
+        }
+
+        .card:nth-child(7) {
+            animation-delay: .35s
+        }
+
+        .card:nth-child(8) {
+            animation-delay: .4s
+        }
+
+        .card:nth-child(n+9) {
+            animation-delay: .45s
+        }
+
+        .loading-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, .3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin .6s linear infinite;
+            display: inline-block
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="nav-inner">
+            <div class="logo" id="logoHome">
+                <div class="logo-icon"><img src="favicon.ico" alt="LearnHub"></div>
+                <span class="logo-text">LearnHub</span>
+            </div>
+            <div class="search-wrap">
+                <span class="search-icon">🔍</span>
+                <input class="search-input" type="text" id="searchDesktop" placeholder="Search Python, React, Science…"
+                    autocomplete="off">
+            </div>
+            <div class="nav-actions">
+                <span class="count-badge" id="totalBadge">Loading…</span>
+                <button class="add-course-nav-btn" id="addCourseNavBtn" title="Add a course">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="12" y1="5" x2="12" y2="19" />
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                    </svg>
+                    <span>Add Course</span>
+                </button>
+                <button class="theme-btn" id="themeBtn" title="Toggle theme">🌙</button>
+                <button class="auth-nav-btn" id="authNavBtn">👤 Sign In</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <aside>
+            <div class="sidebar-sticky">
+                <div class="sidebar-section">
+                    <div class="sidebar-header">
+                        <span class="sidebar-label">Categories</span>
+                        <button class="collapse-btn" id="collapseBtn"><span id="collapseIcon">▲</span> Filter</button>
+                    </div>
+                    <div class="category-list" id="categoryList"></div>
+                </div>
+            </div>
+        </aside>
+        <main>
+            <div class="mobile-search">
+                <span class="search-icon">🔍</span>
+                <input class="search-input" type="text" id="searchMobile" placeholder="Search courses…"
+                    autocomplete="off">
+            </div>
+            <div class="pulse-bar"></div>
+            <div class="metrics-banner" id="metricsBanner">
+                <div class="metric-card mc-courses">
+                    <div class="metric-icon">📚</div>
+                    <div class="metric-body">
+                        <div class="metric-value" id="metricCourses">—</div>
+                        <div class="metric-label">Total Courses</div>
+                        <div class="metric-sub" id="metricCourseSub">Loading…</div>
+                    </div>
+                </div>
+                <div class="metric-card mc-hours">
+                    <div class="metric-icon">⏱️</div>
+                    <div class="metric-body">
+                        <div class="metric-value" id="metricHours">—</div>
+                        <div class="metric-label">Total Content</div>
+                        <div class="metric-sub" id="metricHoursSub">of curated learning</div>
+                    </div>
+                </div>
+                <div class="metric-card mc-progress" id="metricProgressCard" style="display:none">
+                    <div class="metric-icon">🎯</div>
+                    <div class="metric-body">
+                        <div class="metric-value" id="metricPct">0%</div>
+                        <div class="metric-label">Your Progress</div>
+                        <div class="metric-sub" id="metricProgSub">0 completed</div>
+                        <div class="metric-prog-track">
+                            <div class="metric-prog-fill" id="metricProgFill" style="width:0%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="main-header">
+                <h1 class="main-title" id="mainTitle">All Courses</h1>
+                <span class="results-count" id="resultsCount">Loading…</span>
+            </div>
+            <div class="grid" id="videoGrid">
+                <div class="empty">
+                    <div class="empty-icon">⏳</div>
+                    <h3>Loading courses…</h3>
+                    <p>Fetching from Supabase</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- VIDEO MODAL -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <span class="modal-title" id="modalTitle"></span>
+                <button class="modal-close" id="modalClose">✕</button>
+            </div>
+            <div class="modal-video">
+                <iframe id="modalIframe"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen></iframe>
+            </div>
+            <div class="modal-footer">
+                <span class="modal-footer-label" id="modalFooterLabel"></span>
+                <div class="modal-prog-btns" id="modalProgBtns"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AUTH MODAL -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-box">
+            <div class="auth-panel-left">
+                <div class="auth-orbs">
+                    <div class="auth-orb auth-orb-1"></div>
+                    <div class="auth-orb auth-orb-2"></div>
+                    <div class="auth-orb auth-orb-3"></div>
+                    <div class="auth-dot"></div>
+                    <div class="auth-dot"></div>
+                    <div class="auth-dot"></div>
+                    <div class="auth-dot"></div>
+                </div>
+                <div class="auth-left-brand">
+                    <div class="auth-left-logo">
+                        <div class="auth-left-logo-icon"><img src="favicon.ico" alt="LearnHub"></div>
+                        <span class="auth-left-logo-text">LearnHub</span>
+                    </div>
+                    <div class="auth-left-headline">Learn without<br><span>limits.</span></div>
+                    <div class="auth-left-sub">Curated courses across programming, science, maths &amp; more. Track
+                        every step of your journey.</div>
+                </div>
+                <div class="auth-features">
+                    <div class="auth-feature">
+                        <div class="auth-feature-icon" style="background:rgba(99,102,241,.2)">🎯</div>
+                        <div class="auth-feature-text"><strong>Progress Tracking</strong><span>Pick up right where you
+                                left off</span></div>
+                    </div>
+                    <div class="auth-feature">
+                        <div class="auth-feature-icon" style="background:rgba(16,185,129,.15)">📊</div>
+                        <div class="auth-feature-text"><strong>Your Dashboard</strong><span>Stats, streaks &amp;
+                                completion rates</span></div>
+                    </div>
+                    <div class="auth-feature">
+                        <div class="auth-feature-icon" style="background:rgba(245,158,11,.15)">☁️</div>
+                        <div class="auth-feature-text"><strong>Syncs Everywhere</strong><span>Any device, always in
+                                sync</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="auth-panel-right">
+                <button class="auth-close-btn" id="authModalClose">✕</button>
+                <div class="auth-right-header">
+                    <div class="auth-right-eyebrow" id="authEyebrow">Welcome back</div>
+                    <div class="auth-right-title" id="authTitle">Sign in to your account</div>
+                    <div class="auth-right-sub" id="authSub">Enter your credentials to continue.</div>
+                </div>
+                <div class="auth-segment">
+                    <button class="auth-seg-btn active" id="tabSignIn">Sign In</button>
+                    <button class="auth-seg-btn" id="tabSignUp">Create Account</button>
+                </div>
+                <div id="formSignIn">
+                    <div class="auth-form">
+                        <div class="auth-field">
+                            <input class="auth-input" type="email" id="siEmail" placeholder=" " autocomplete="email">
+                            <label class="auth-label" for="siEmail">Email address</label>
+                        </div>
+                        <div class="auth-field">
+                            <div class="password-wrap">
+                                <input class="auth-input" type="password" id="siPassword" placeholder=" "
+                                    autocomplete="current-password">
+                                <label class="auth-label" for="siPassword">Password</label>
+                                <button class="pw-toggle" type="button" data-target="siPassword">👁</button>
+                            </div>
+                        </div>
+                        <div class="auth-msg" id="siMsg"></div>
+                        <button class="auth-submit" id="siSubmit">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+                                <polyline points="10 17 15 12 10 7" />
+                                <line x1="15" y1="12" x2="3" y2="12" />
+                            </svg>
+                            Sign In
+                        </button>
+                    </div>
+                    <p class="auth-switch">No account? <a href="#" id="switchToSignUp">Create one free →</a></p>
+                </div>
+                <div id="formSignUp" style="display:none">
+                    <div class="auth-form">
+                        <div class="auth-field">
+                            <input class="auth-input" type="email" id="suEmail" placeholder=" " autocomplete="email">
+                            <label class="auth-label" for="suEmail">Email address</label>
+                        </div>
+                        <div class="auth-field">
+                            <div class="password-wrap">
+                                <input class="auth-input" type="password" id="suPassword" placeholder=" "
+                                    autocomplete="new-password">
+                                <label class="auth-label" for="suPassword">Password</label>
+                                <button class="pw-toggle" type="button" data-target="suPassword">👁</button>
+                            </div>
+                            <div class="pw-strength" id="pwStrength">
+                                <div class="pw-strength-bar" id="pwBar1"></div>
+                                <div class="pw-strength-bar" id="pwBar2"></div>
+                                <div class="pw-strength-bar" id="pwBar3"></div>
+                                <div class="pw-strength-bar" id="pwBar4"></div>
+                            </div>
+                        </div>
+                        <div class="auth-field">
+                            <div class="password-wrap">
+                                <input class="auth-input" type="password" id="suConfirm" placeholder=" "
+                                    autocomplete="new-password">
+                                <label class="auth-label" for="suConfirm">Confirm password</label>
+                                <button class="pw-toggle" type="button" data-target="suConfirm">👁</button>
+                            </div>
+                        </div>
+                        <div class="auth-msg" id="suMsg"></div>
+                        <button class="auth-submit" id="suSubmit">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <line x1="19" y1="8" x2="19" y2="14" />
+                                <line x1="22" y1="11" x2="16" y2="11" />
+                            </svg>
+                            Create Account
+                        </button>
+                    </div>
+                    <p class="auth-switch">Already have an account? <a href="#" id="switchToSignIn">Sign in →</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD COURSE MODAL -->
+    <div class="add-course-modal" id="addCourseModal">
+        <div class="add-course-box">
+            <div class="add-course-header">
+                <div>
+                    <div class="add-course-title">➕ Add New Course</div>
+                    <div style="font-size:.75rem;color:var(--text-muted);margin-top:2px">Paste a YouTube link and fill
+                        in the details</div>
+                </div>
+                <button class="modal-close" id="addCourseClose">✕</button>
+            </div>
+            <div class="add-course-body">
+                <div class="add-form-msg" id="addFormMsg"></div>
+                <div style="display:flex;flex-direction:column;gap:16px">
+                    <div class="form-row single">
+                        <div class="field-group">
+                            <label class="field-label">YouTube URL or Video ID *</label>
+                            <input class="field-input" type="text" id="acYtUrl"
+                                placeholder="https://youtube.com/watch?v=… or just the video ID">
+                            <div class="loading-bar" id="acLoadingBar">
+                                <div class="loading-bar-fill"></div>
+                            </div>
+                            <div class="yt-preview" id="acPreview">
+                                <img id="acPreviewImg" src="" alt="Thumbnail">
+                                <div class="yt-preview-info" id="acPreviewInfo">Preview loaded</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="field-group">
+                            <label class="field-label">Title *</label>
+                            <input class="field-input" type="text" id="acTitle" placeholder="Course title">
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label">Category *</label>
+                            <select class="field-input" id="acCategory">
+                                <option value="">Select category…</option>
+                                <option>Web Development</option>
+                                <option>Programming</option>
+                                <option>Computer Science</option>
+                                <option>Data Science</option>
+                                <option>DevOps</option>
+                                <option>Databases</option>
+                                <option>Mobile Development</option>
+                                <option>Software Engineering</option>
+                                <option>Cybersecurity</option>
+                                <option>Backend Development</option>
+                                <option>Game Development</option>
+                                <option>Science & Maths</option>
+                                <option>Productivity</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row single">
+                        <div class="field-group">
+                            <label class="field-label">Description *</label>
+                            <textarea class="field-input" id="acSummary"
+                                placeholder="Brief description of what this course covers…"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="field-group">
+                            <label class="field-label">Duration (minutes)</label>
+                            <input class="field-input" type="number" id="acDuration" placeholder="e.g. 120" min="1">
+                        </div>
+                        <div class="field-group">
+                            <label class="field-label">Icon / Emoji</label>
+                            <input class="field-input" type="text" id="acIcon" placeholder="🎓" maxlength="4"
+                                style="font-size:1.3rem;text-align:center">
+                            <div class="icon-grid" id="iconGrid"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="add-course-footer">
+                <button class="btn-cancel" id="addCourseCancel">Cancel</button>
+                <button class="btn-save" id="addCourseSave">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                        <polyline points="17 21 17 13 7 13" />
+                        <polyline points="7 3 7 8 15 8" />
+                    </svg>
+                    Save Course
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="account-panel-overlay" id="panelOverlay"></div>
+    <div class="account-panel" id="accountPanel">
+        <div class="panel-header">
+            <div class="panel-avatar" id="panelAvatar">?</div>
+            <div class="panel-user-info">
+                <div class="panel-user-name" id="panelName">My Account</div>
+                <div class="panel-user-email" id="panelEmail"></div>
+            </div>
+            <button class="panel-close" id="panelClose">✕</button>
+        </div>
+        <div class="panel-body" id="panelBody"></div>
+    </div>
+
+    <div class="offline-banner" id="offlineBanner">
+        <span>⚠️</span> Supabase blocked by Edge Tracking Prevention — courses loading from static list. Auth &amp; sync
+        unavailable.
+        <a href="edge://settings/content/cookies"
+            style="color:#fff;font-weight:700;margin-left:4px;text-decoration:underline"
+            onclick="this.href='https://support.microsoft.com/en-us/microsoft-edge/tracking-prevention-in-microsoft-edge-5ac125e8-9b90-8d59-fa2c-7f2e9a44d869'">Fix
+            →</a>
+    </div>
+    <div class="toast-wrap" id="toastWrap"></div>
+
+    <script>
+        // ═══════════════════════════════════════════════════════════════════
+        // INLINE SUPABASE CLIENT — zero CDN dependencies, immune to tracking
+        // prevention. Uses the Supabase REST + Auth API directly via fetch().
+        // ═══════════════════════════════════════════════════════════════════
+        const SUPABASE_URL = 'https://vooqrsdmmcgkzabhlitr.supabase.co';
+        const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZvb3Fyc2RtbWNna3phYmhsaXRyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEzNTQxMjUsImV4cCI6MjA4NjkzMDEyNX0.Iq2R1In6n8_Dzzq9SGGjmnb7rE3Omrhh4QW54tddVfg';
+
+        // ── COOKIE SESSION STORAGE (same-origin, Tracking Prevention immune) ──
+        const _store = (() => {
+            const PRE = 'lh_'; // prefix to avoid cookie name collisions
+            const CHUNK = 3800; // stay under 4KB per cookie
+            function cGet(k) {
+                const m = document.cookie.match('(?:^|;)\\s*' + encodeURIComponent(PRE + k) + '=([^;]*)');
+                return m ? decodeURIComponent(m[1]) : null;
+            }
+            function cSet(k, v) {
+                const exp = new Date(Date.now() + 30 * 864e5).toUTCString();
+                document.cookie = encodeURIComponent(PRE + k) + '=' + encodeURIComponent(v) + ';expires=' + exp + ';path=/;SameSite=Lax';
+            }
+            function cDel(k) {
+                document.cookie = encodeURIComponent(PRE + k) + '=;expires=Thu,01 Jan 1970 00:00:00 GMT;path=/;SameSite=Lax';
+            }
+            return {
+                get(k) {
+                    // Try chunked first
+                    const c0 = cGet(k + '_0');
+                    if (c0 !== null) {
+                        let v = c0, i = 1, c;
+                        while ((c = cGet(k + '_' + i)) !== null) { v += c; i++; }
+                        return v;
+                    }
+                    return cGet(k);
+                },
+                set(k, v) {
+                    // Clear old chunks
+                    for (let i = 0; i < 12; i++) cDel(k + '_' + i);
+                    cDel(k);
+                    if (!v) return;
+                    if (v.length <= CHUNK) { cSet(k, v); return; }
+                    for (let i = 0, pos = 0; pos < v.length; pos += CHUNK, i++)
+                        cSet(k + '_' + i, v.slice(pos, pos + CHUNK));
+                },
+                del(k) {
+                    for (let i = 0; i < 12; i++) cDel(k + '_' + i);
+                    cDel(k);
+                }
+            };
+        })();
+
+        // ── INLINE SUPABASE CLIENT ──
+        const sb = (() => {
+            const BASE = SUPABASE_URL;
+            const KEY = SUPABASE_ANON;
+            const SESSION_KEY = 'session';
+            let _session = null;           // { access_token, refresh_token, expires_at, user }
+            let _authListeners = [];
+            let _refreshTimer = null;
+
+            // ── helpers ──
+            function headers(extra = {}) {
+                const h = { 'Content-Type': 'application/json', 'apikey': KEY, ...extra };
+                if (_session?.access_token) h['Authorization'] = 'Bearer ' + _session.access_token;
+                return h;
+            }
+
+            async function apiFetch(path, opts = {}) {
+                const r = await fetch(BASE + path, { ...opts, headers: headers(opts.headers || {}) });
+                let body = {};
+                try { body = await r.json(); } catch (_) { }
+                return { ok: r.ok, status: r.status, data: body };
+            }
+
+            // ── session persistence ──
+            function saveSession(s) {
+                _session = s;
+                if (s) _store.set(SESSION_KEY, JSON.stringify(s));
+                else _store.del(SESSION_KEY);
+            }
+            function loadSession() {
+                const raw = _store.get(SESSION_KEY);
+                if (!raw) return null;
+                try { return JSON.parse(raw); } catch (_) { return null; }
+            }
+
+            // ── token refresh ──
+            function scheduleRefresh(expiresAt) {
+                if (_refreshTimer) clearTimeout(_refreshTimer);
+                const msLeft = (expiresAt * 1000) - Date.now() - 60000; // 1 min early
+                if (msLeft <= 0) { refreshSession(); return; }
+                _refreshTimer = setTimeout(refreshSession, Math.min(msLeft, 2147483647));
+            }
+            async function refreshSession() {
+                if (!_session?.refresh_token) { signOut(); return; }
+                const r = await apiFetch('/auth/v1/token?grant_type=refresh_token', {
+                    method: 'POST',
+                    body: JSON.stringify({ refresh_token: _session.refresh_token })
+                });
+                if (r.ok && r.data.access_token) {
+                    const s = { ...r.data, user: r.data.user || _session.user };
+                    saveSession(s);
+                    scheduleRefresh(s.expires_at);
+                    _authListeners.forEach(fn => fn('TOKEN_REFRESHED', s));
+                } else {
+                    // refresh failed – clear session
+                    saveSession(null);
+                    _authListeners.forEach(fn => fn('SIGNED_OUT', null));
+                }
+            }
+
+            // ── notify listeners ──
+            function emit(event, session) {
+                _authListeners.forEach(fn => fn(event, session));
+            }
+
+            // ── auth object ──
+            const auth = {
+                onAuthStateChange(cb) {
+                    _authListeners.push(cb);
+                    // fire immediately with current state (async, like real supabase)
+                    setTimeout(() => cb(_session ? 'INITIAL_SESSION' : 'SIGNED_OUT', _session), 0);
+                    return { data: { subscription: { unsubscribe: () => { _authListeners = _authListeners.filter(f => f !== cb); } } } };
+                },
+
+                async getSession() {
+                    if (_session) return { data: { session: _session }, error: null };
+                    const s = loadSession();
+                    if (s) {
+                        // Check if expired
+                        if (s.expires_at && Date.now() / 1000 > s.expires_at - 60) {
+                            // Try refresh silently
+                            const r = await apiFetch('/auth/v1/token?grant_type=refresh_token', {
+                                method: 'POST',
+                                body: JSON.stringify({ refresh_token: s.refresh_token })
+                            });
+                            if (r.ok && r.data.access_token) {
+                                const ns = { ...r.data, user: r.data.user || s.user };
+                                saveSession(ns);
+                                scheduleRefresh(ns.expires_at);
+                                _session = ns;
+                                return { data: { session: ns }, error: null };
+                            } else {
+                                saveSession(null);
+                                return { data: { session: null }, error: null };
+                            }
+                        }
+                        _session = s;
+                        scheduleRefresh(s.expires_at);
+                        return { data: { session: s }, error: null };
+                    }
+                    return { data: { session: null }, error: null };
+                },
+
+                async signInWithPassword({ email, password }) {
+                    const r = await apiFetch('/auth/v1/token?grant_type=password', {
+                        method: 'POST',
+                        body: JSON.stringify({ email, password })
+                    });
+                    if (r.ok && r.data.access_token) {
+                        const s = { ...r.data };
+                        saveSession(s);
+                        scheduleRefresh(s.expires_at);
+                        emit('SIGNED_IN', s);
+                        return { data: { session: s, user: s.user }, error: null };
+                    }
+                    const msg = r.data?.error_description || r.data?.msg || r.data?.message || 'Invalid login credentials';
+                    return { data: null, error: { message: msg } };
+                },
+
+                async signUp({ email, password }) {
+                    const r = await apiFetch('/auth/v1/signup', {
+                        method: 'POST',
+                        body: JSON.stringify({ email, password })
+                    });
+                    if (r.status === 400) {
+                        const msg = r.data?.msg || r.data?.message || 'Sign up failed';
+                        return { data: null, error: { message: msg.includes('already') ? 'User already registered' : msg } };
+                    }
+                    if (r.ok) {
+                        const s = r.data.access_token ? r.data : null;
+                        if (s) { saveSession(s); scheduleRefresh(s.expires_at); emit('SIGNED_IN', s); }
+                        return { data: { session: s, user: r.data.user || (s && s.user) || null }, error: null };
+                    }
+                    return { data: null, error: { message: r.data?.message || 'Sign up failed' } };
+                },
+
+                async signOut() {
+                    if (_session?.access_token) {
+                        await apiFetch('/auth/v1/logout', { method: 'POST' }).catch(() => { });
+                    }
+                    if (_refreshTimer) clearTimeout(_refreshTimer);
+                    saveSession(null);
+                    emit('SIGNED_OUT', null);
+                    return { error: null };
+                }
+            };
+
+            // ── PostgREST query builder (supports .select .eq .upsert .insert .delete .order) ──
+            function qb(table) {
+                let _method = 'GET';
+                let _body = null;
+                let _params = [];
+                let _headers = {};
+
+                const q = {
+                    select(cols = '*') { _params.push(['select', cols]); return q; },
+                    eq(col, val) { _params.push([col + '.eq', val]); return q; },
+                    order(col, { ascending = true } = {}) {
+                        _params.push(['order', col + (ascending ? '.asc' : '.desc')]); return q;
+                    },
+                    insert(rows) {
+                        _method = 'POST';
+                        _body = JSON.stringify(Array.isArray(rows) ? rows : [rows]);
+                        _headers['Prefer'] = 'return=representation';
+                        return q;
+                    },
+                    upsert(rows, { onConflict } = {}) {
+                        _method = 'POST';
+                        _body = JSON.stringify(Array.isArray(rows) ? rows : [rows]);
+                        _headers['Prefer'] = 'resolution=merge-duplicates,return=representation';
+                        if (onConflict) _params.push(['on_conflict', onConflict]);
+                        return q;
+                    },
+                    delete() { _method = 'DELETE'; _headers['Prefer'] = 'return=representation'; return q; },
+
+                    async then(resolve, reject) {
+                        const qs = _params.map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(v)).join('&');
+                        const url = BASE + '/rest/v1/' + table + (qs ? '?' + qs : '');
+                        try {
+                            const r = await fetch(url, {
+                                method: _method,
+                                headers: { ...headers(_headers) },
+                                body: _body || undefined
+                            });
+                            let data = null;
+                            try { data = await r.json(); } catch (_) { data = []; }
+                            if (!r.ok) {
+                                // 404 on table = code 42P01 or PGRST116
+                                const code = data?.code || (r.status === 404 ? '42P01' : String(r.status));
+                                resolve({ data: null, error: { message: data?.message || data?.hint || 'Request failed', code } });
+                            } else {
+                                resolve({ data: Array.isArray(data) ? data : (data ? [data] : []), error: null });
+                            }
+                        } catch (e) {
+                            resolve({ data: null, error: { message: e.message } });
+                        }
+                    }
+                };
+                // make awaitable
+                q.then = q.then;
+                return q;
+            }
+
+            function from(table) { return qb(table); }
+
+            // ── Boot: restore session on load ──
+            (async () => {
+                const { data: { session } } = await auth.getSession();
+                if (session) emit('INITIAL_SESSION', session);
+                else emit('SIGNED_OUT', null);
+            })();
+
+            return { auth, from };
+        })();
+
+        // ── FALLBACK STATIC COURSES (if DB table doesn't exist yet) ──
+        const STATIC_COURSES = [
+            // ── Web Development ──
+            { id: 'bWACo_pvKxg', dur: 840, title: 'HTML & CSS Full Course', category: 'Web Development', summary: 'A complete 14-hour guide to building websites from scratch with HTML and CSS. Covers semantic markup, layouts, Flexbox, Grid, responsive design, and modern CSS features.', icon: '🌐' },
+            { id: 'H3XIJYEPdus', dur: 930, title: 'JavaScript Full Course', category: 'Web Development', summary: 'A thorough 15.5-hour JavaScript course covering fundamentals, DOM manipulation, async programming, ES6+ features, and real-world project building.', icon: '🟨' },
+            { id: 'M9O5AjEFzKw', dur: 3000, title: 'React - The Complete Course', category: 'Web Development', summary: 'A massive 50-hour React course covering everything from fundamentals to advanced patterns — hooks, context, Redux, Next.js integration, testing, and building production-ready applications.', icon: '⚛️' },
+            { id: 'ZvZ7gvcmPmI', dur: 61, title: 'TypeScript Crash Course', category: 'Web Development', summary: 'Master the basics of TypeScript in one hour. Learn types, interfaces, classes, and how to integrate TS into your JavaScript projects.', icon: '🖥️' },
+            { id: 'zeCDuo74uzA', dur: 210, title: 'TypeScript Full Course', category: 'Web Development', summary: 'A 3.5-hour deep dive into TypeScript covering advanced types, generics, decorators, utility types, and integrating TypeScript into real-world projects.', icon: '📘' },
+            { id: '6_wK_Ud8--0', dur: 55, title: 'TypeScript - The Basics', category: 'Web Development', summary: 'A quick overview of TypeScript, adding static types to JavaScript to improve code quality and developer productivity.', icon: '📘' },
+            { id: 'Kt2E8nblvXU', dur: 98, title: 'Vue.js Full Course', category: 'Web Development', summary: 'Learn Vue.js from the ground up, covering the Options API, Composition API, Vue Router, Pinia state management, and building real-world applications.', icon: '💚' },
+            { id: 'CpbRAWgFBRQ', dur: 60, title: 'Blazor Fundamentals', category: 'Web Development', summary: "Learn to build interactive web UIs using C# instead of JavaScript with Microsoft's Blazor framework.", icon: '🖥️' },
+            { id: '-qfEOE4vtxE', dur: 240, title: 'Bootstrap 5 Full Course', category: 'Web Development', summary: 'Learn to build responsive websites quickly using the Bootstrap 5 CSS framework. Covers grid system, components, and utilities.', icon: '🖥️' },
+            // ── Programming ──
+            { id: '8jLOx1hD3_o', dur: 1867, title: 'C++ Tutorial for Beginners', category: 'Programming', summary: 'A complete introduction to C++ programming. Covers syntax, memory management, pointers, and object-oriented programming.', icon: '⌨️' },
+            { id: 'BpPEoZW5IiY', dur: 140, title: 'Rust by Practice', category: 'Programming', summary: 'Learn the Rust programming language by solving practical exercises and building small projects.', icon: '🦀' },
+            { id: '1o0c-zD3iFU', dur: 2, title: 'Rust in 100 Seconds', category: 'Programming', summary: 'A rapid introduction to Rust, covering its memory safety features, ownership model, and high performance.', icon: '⚡' },
+            { id: 'YS4e4q9oBaU', dur: 390, title: 'Go Programming (Golang) Course', category: 'Programming', summary: 'A comprehensive course on the Go programming language, including syntax, concurrency, and building real-world projects.', icon: '🐹' },
+            // ── Computer Science ──
+            { id: '8mAITcNt710', dur: 1560, title: 'Harvard CS50: Intro to CS', category: 'Computer Science', summary: "Harvard's famous introduction to computer science, covering C, Python, SQL, algorithms, and data structures.", icon: '🎓' },
+            { id: 'o0XbHvKxw7Y', dur: 93, title: 'Algorithm Mastery', category: 'Computer Science', summary: 'A focused session on mastering key algorithms required for technical interviews and competitive programming.', icon: '🧠' },
+            // ── Science & Maths ──
+            { id: '6OV3tmt9uhs', dur: 2068, title: 'General Chemistry Full Course', category: 'Science & Maths', summary: 'A comprehensive university-level course covering atoms, stoichiometry, thermodynamics, kinetics, and chemical equilibrium.', icon: '🧪' },
+            { id: 'G9JxuWk7BDA', dur: 212, title: 'Discrete Mathematics', category: 'Science & Maths', summary: 'Master the math behind computer science: logic, set theory, combinatorics, graph theory, and proofs.', icon: '📐' },
+            // ── Data Science ──
+            { id: 'gWvwu7qLjJs', dur: 1377, title: 'TensorFlow Full Course', category: 'Data Science', summary: 'A comprehensive 22+ hour TensorFlow course covering neural networks, CNNs, RNNs, transfer learning, and deploying models for real-world machine learning tasks.', icon: '🧠' },
+            { id: 'V_xro1bcAuA', dur: 72, title: 'Machine Learning Roadmap 2025', category: 'Data Science', summary: 'A step-by-step guide to becoming a Machine Learning Engineer, covering math, Python, neural networks, and MLOps.', icon: '🤖' },
+            { id: 'oXlwWbU8l2o', dur: 221, title: 'OpenCV Full Course', category: 'Data Science', summary: 'Learn computer vision with OpenCV and Python. Covers image processing, object detection, face recognition, and real-time video analysis.', icon: '👁️' },
+            { id: 'QtiM87MV27w', dur: 19, title: 'Neural Networks Explained', category: 'Data Science', summary: 'A visual explanation of how neural networks work, from the basic perceptron to deep learning concepts.', icon: '🧬' },
+            { id: 'CMEWVn1uZpQ', dur: 218, title: 'Python for Data Science', category: 'Data Science', summary: 'Learn Python libraries for data analysis and visualization, including Pandas, NumPy, Matplotlib, and Seaborn.', icon: '🐍' },
+            // ── DevOps ──
+            { id: '6WatcfENsOU', dur: 141, title: 'Linux Crash Course', category: 'DevOps', summary: 'A fast-paced introduction to Linux, covering the command line, file system navigation, permissions, process management, and essential tools.', icon: '🛠️' },
+            { id: 'un6ZyFkqFKo', dur: 78, title: 'Cloud Computing Essentials', category: 'DevOps', summary: 'Understand the building blocks of cloud computing, serverless architectures, and deployment strategies.', icon: '☁️' },
+            { id: 'Wf2eSG3owoA', dur: 360, title: 'Docker & Kubernetes Full Course', category: 'DevOps', summary: 'A complete guide to containerization with Docker and orchestration with Kubernetes for modern DevOps workflows.', icon: '🐳' },
+            { id: 'a_SthPXtV6c', dur: 2, title: 'Docker in 100 Seconds', category: 'DevOps', summary: 'Understand the basics of Docker containerization, images, and how to ship applications consistently.', icon: '🐳' },
+            // ── Databases ──
+            { id: 'SpfIwlAYaKk', dur: 173, title: 'PostgreSQL Crash Course', category: 'Databases', summary: 'A rapid introduction to PostgreSQL, covering SQL queries, database design, and advanced features like JSONB.', icon: '🗄️' },
+            { id: 'XCsS_NVAa1g', dur: 42, title: 'Redis Crash Course', category: 'Databases', summary: 'Learn Redis, the ultra-fast in-memory key-value store. Covers caching, pub/sub, and data persistence.', icon: '⚡' },
+            // ── Mobile Development ──
+            { id: '-VC3hIEL7eQ', dur: 68, title: 'SwiftUI for Beginners', category: 'Mobile Development', summary: "Build iOS apps from scratch using Apple's modern UI framework, SwiftUI. Covers views, state management, and layout.", icon: '📱' },
+            { id: 'VPvVD8t02U8', dur: 2199, title: 'Flutter Course for Beginners', category: 'Mobile Development', summary: "Learn to build cross-platform mobile applications for iOS and Android using Google's Flutter framework and Dart.", icon: '📱' },
+            { id: '9UKCv9T_rIo', dur: 115, title: 'React Native & Expo Router', category: 'Mobile Development', summary: 'Build a full-featured meditation app using React Native and the Expo Router for navigation.', icon: '📱' },
+            // ── Software Engineering ──
+            { id: '5rNk7m_zlAg', dur: 762, title: 'TDD Revisited - Ian Cooper', category: 'Software Engineering', summary: 'A deep dive into Test Driven Development (TDD), exploring its original purpose, common misconceptions, and how to apply it effectively in modern software architecture.', icon: '⚙️' },
+            { id: 'blKkRoZPxLc', dur: 170, title: 'Advanced Software Concepts', category: 'Software Engineering', summary: 'An exploration of advanced programming paradigms and architectural patterns for building scalable systems.', icon: '🧩' },
+            // ── Cybersecurity ──
+            { id: 'ug8W0sFiVJo', dur: 215, title: 'Kali Linux Full Course', category: 'Cybersecurity', summary: 'A comprehensive 3h 35m guide to Kali Linux — the premier penetration testing distribution. Covers installation, tools, network scanning, exploitation frameworks, and ethical hacking workflows.', icon: '🐉' },
+            { id: 'mAFoROnOfHs', dur: 148, title: 'Git & GitHub Full Course', category: 'Software Engineering', summary: 'A complete guide to Git version control and GitHub — covering commits, branching, merging, pull requests, and collaborative development workflows.', icon: '🔀' },
+            { id: 'fgdpvwEWJ9M', dur: 143, title: 'Network Security Basics', category: 'Cybersecurity', summary: 'Fundamental concepts of network security, encryption, and protecting applications from common vulnerabilities.', icon: '🔐' },
+            // ── Backend Development ──
+            { id: '5VUjP1wMqoE', dur: 174, title: 'Spring Boot & PostgreSQL API', category: 'Backend Development', summary: 'Build a RESTful API using Java Spring Boot, connect it to a PostgreSQL database, and secure it with JWT.', icon: '☕' },
+            // ── Game Development ──
+            { id: '6UlU_FsicK8', dur: 660, title: 'Unreal Engine 5 C++ Tutorial', category: 'Game Development', summary: 'Start your game development journey with Unreal Engine 5 and C++. Learn the engine interface and basic scripting.', icon: '🎮' },
+            // ── Productivity ──
+            { id: 'DosHnyq78xY', dur: 73, title: 'Intro to MCP Servers', category: 'Productivity', summary: 'Learn how to bridge your terminal and AI workflow using MCP (Model Context Protocol) servers to boost developer productivity.', icon: '🤖' },
+        ];
+
+        // ── STATE ──
+        let videos = [];
+        let currentUser = null, userProgress = {}, activeCategory = 'All', searchQuery = '', sidebarOpen = true, activeVideoId = null;
+
+        const catColors = {
+            'All': ['#6366f1', '#4f46e5', 'rgba(99,102,241,.35)', 'rgba(99,102,241,.18)', '#c7d2fe', 'rgba(99,102,241,.4)', 'rgba(99,102,241,.1)'],
+            'Web Development': ['#06b6d4', '#0891b2', 'rgba(6,182,212,.35)', 'rgba(6,182,212,.18)', '#a5f3fc', 'rgba(6,182,212,.4)', 'rgba(6,182,212,.1)'],
+            'Programming': ['#f59e0b', '#d97706', 'rgba(245,158,11,.35)', 'rgba(245,158,11,.18)', '#fde68a', 'rgba(245,158,11,.4)', 'rgba(245,158,11,.1)'],
+            'Computer Science': ['#8b5cf6', '#7c3aed', 'rgba(139,92,246,.35)', 'rgba(139,92,246,.18)', '#ddd6fe', 'rgba(139,92,246,.4)', 'rgba(139,92,246,.1)'],
+            'Data Science': ['#10b981', '#059669', 'rgba(16,185,129,.35)', 'rgba(16,185,129,.18)', '#a7f3d0', 'rgba(16,185,129,.4)', 'rgba(16,185,129,.1)'],
+            'DevOps': ['#f97316', '#ea580c', 'rgba(249,115,22,.35)', 'rgba(249,115,22,.18)', '#fed7aa', 'rgba(249,115,22,.4)', 'rgba(249,115,22,.1)'],
+            'Databases': ['#3b82f6', '#2563eb', 'rgba(59,130,246,.35)', 'rgba(59,130,246,.18)', '#bfdbfe', 'rgba(59,130,246,.4)', 'rgba(59,130,246,.1)'],
+            'Mobile Development': ['#ec4899', '#db2777', 'rgba(236,72,153,.35)', 'rgba(236,72,153,.18)', '#fbcfe8', 'rgba(236,72,153,.4)', 'rgba(236,72,153,.1)'],
+            'Software Engineering': ['#6366f1', '#4f46e5', 'rgba(99,102,241,.35)', 'rgba(99,102,241,.18)', '#c7d2fe', 'rgba(99,102,241,.4)', 'rgba(99,102,241,.1)'],
+            'Cybersecurity': ['#ef4444', '#dc2626', 'rgba(239,68,68,.35)', 'rgba(239,68,68,.18)', '#fecaca', 'rgba(239,68,68,.4)', 'rgba(239,68,68,.1)'],
+            'Backend Development': ['#14b8a6', '#0d9488', 'rgba(20,184,166,.35)', 'rgba(20,184,166,.18)', '#99f6e4', 'rgba(20,184,166,.4)', 'rgba(20,184,166,.1)'],
+            'Game Development': ['#a855f7', '#9333ea', 'rgba(168,85,247,.35)', 'rgba(168,85,247,.18)', '#e9d5ff', 'rgba(168,85,247,.4)', 'rgba(168,85,247,.1)'],
+            'Science & Maths': ['#22d3ee', '#06b6d4', 'rgba(34,211,238,.35)', 'rgba(34,211,238,.18)', '#a5f3fc', 'rgba(34,211,238,.4)', 'rgba(34,211,238,.1)'],
+            'Productivity': ['#84cc16', '#65a30d', 'rgba(132,204,22,.35)', 'rgba(132,204,22,.18)', '#d9f99d', 'rgba(132,204,22,.4)', 'rgba(132,204,22,.1)'],
+            'Other': ['#94a3b8', '#64748b', 'rgba(148,163,184,.35)', 'rgba(148,163,184,.18)', '#e2e8f0', 'rgba(148,163,184,.4)', 'rgba(148,163,184,.1)'],
+        };
+
+        function applyColorVars(el, cat) {
+            const c = catColors[cat] || catColors['Other'];
+            el.style.setProperty('--cat-color', c[0]); el.style.setProperty('--cat-color-dark', c[1]);
+            el.style.setProperty('--cat-color-glow', c[2]); el.style.setProperty('--cat-color-bg', c[3]);
+            el.style.setProperty('--cat-color-text', c[4]); el.style.setProperty('--cat-color-border', c[5]);
+            el.style.setProperty('--cat-color-subtle', c[6]);
+        }
+
+        function toast(msg, type = 'info') {
+            const wrap = document.getElementById('toastWrap');
+            const t = document.createElement('div'); t.className = `toast t-${type}`;
+            t.innerHTML = `<span>${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span> ${msg}`;
+            wrap.appendChild(t); requestAnimationFrame(() => requestAnimationFrame(() => t.classList.add('show')));
+            setTimeout(() => { t.classList.remove('show'); setTimeout(() => t.remove(), 400); }, 3500);
+        }
+
+        function esc(str) { return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;'); }
+        function fmtDur(m) { if (!m) return ''; const h = Math.floor(m / 60), min = m % 60; return h > 0 ? (min > 0 ? h + 'h ' + min + 'm' : h + 'h') : min + 'm'; }
+
+        // ── SUPABASE CONNECTIVITY STATE ──
+        let _sbOnline = null; // null=unknown, true=reachable, false=blocked
+
+        async function checkSupabase() {
+            if (_sbOnline !== null) return _sbOnline;
+            try {
+                const r = await fetch(SUPABASE_URL + '/rest/v1/', {
+                    headers: { 'apikey': SUPABASE_ANON },
+                    signal: AbortSignal.timeout(4000)
+                });
+                _sbOnline = r.status < 500; // 200 or 400-range = reachable
+            } catch (_) {
+                _sbOnline = false;
+            }
+            if (!_sbOnline) {
+                document.getElementById('offlineBanner').classList.add('visible');
+            }
+            return _sbOnline;
+        }
+
+        // ── LOAD COURSES FROM SUPABASE (silent fallback) ──
+        async function loadCourses() {
+            const online = await checkSupabase();
+            if (online) {
+                try {
+                    const { data, error } = await sb.from('courses').select('*').order('created_at', { ascending: false });
+                    if (!error && data && data.length > 0) {
+                        const dbIds = new Set(data.map(r => r.video_id));
+                        videos = [...data.map(r => ({
+                            id: r.video_id, title: r.title, category: r.category,
+                            summary: r.summary || r.description || '', dur: r.duration_minutes || 0, icon: r.icon || '🎓',
+                        })), ...STATIC_COURSES.filter(v => !dbIds.has(v.id))];
+                    } else {
+                        videos = STATIC_COURSES;
+                    }
+                } catch (_) {
+                    videos = STATIC_COURSES;
+                }
+            } else {
+                videos = STATIC_COURSES;
+            }
+            buildCategories();
+            renderGrid();
+        }
+
+        // ── ADD COURSE TO SUPABASE (with offline fallback) ──
+        async function addCourseToSupabase(courseData) {
+            const online = await checkSupabase();
+            if (!online) return { data: null, error: { message: 'OFFLINE', offline: true } };
+            const { data, error } = await sb.from('courses').insert([courseData]).select();
+            return { data, error };
+        }
+
+        // ── AUTH ──────────────────────────────────────────────────────
+        let activeAuthTab = 'signin';
+        function setAuthTab(tab) {
+            activeAuthTab = tab;
+            document.getElementById('formSignIn').style.display = tab === 'signin' ? '' : 'none';
+            document.getElementById('formSignUp').style.display = tab === 'signup' ? '' : 'none';
+            document.getElementById('tabSignIn').classList.toggle('active', tab === 'signin');
+            document.getElementById('tabSignUp').classList.toggle('active', tab === 'signup');
+            const ey = document.getElementById('authEyebrow'), ti = document.getElementById('authTitle'), su = document.getElementById('authSub');
+            if (tab === 'signin') { ey.textContent = 'Welcome back'; ti.textContent = 'Sign in to your account'; su.textContent = 'Enter your credentials to continue.'; }
+            else { ey.textContent = 'Get started free'; ti.textContent = 'Create your account'; su.textContent = 'Track your learning journey from day one.'; }
+            ['siMsg', 'suMsg'].forEach(id => { const el = document.getElementById(id); el.className = 'auth-msg'; el.textContent = ''; });
+        }
+        document.getElementById('tabSignIn').addEventListener('click', () => setAuthTab('signin'));
+        document.getElementById('tabSignUp').addEventListener('click', () => setAuthTab('signup'));
+        document.getElementById('switchToSignUp').addEventListener('click', e => { e.preventDefault(); setAuthTab('signup'); });
+        document.getElementById('switchToSignIn').addEventListener('click', e => { e.preventDefault(); setAuthTab('signin'); });
+        document.getElementById('suPassword').addEventListener('input', function () {
+            const val = this.value; let s = 0; if (val.length >= 6) s++; if (val.length >= 10) s++; if (/[A-Z]/.test(val) || /[0-9]/.test(val)) s++; if (/[^A-Za-z0-9]/.test(val)) s++;
+            const bars = document.querySelectorAll('.pw-strength-bar'), cls = ['', 'weak', 'fair', 'good', 'strong'];
+            bars.forEach((b, i) => { b.className = 'pw-strength-bar' + (i < s ? ' ' + cls[s] : ''); });
+        });
+        document.querySelectorAll('.pw-toggle').forEach(btn => {
+            btn.addEventListener('click', () => { const inp = document.getElementById(btn.dataset.target); inp.type = inp.type === 'password' ? 'text' : 'password'; btn.textContent = inp.type === 'password' ? '👁' : '🙈'; });
+        });
+        function setLoading(btnId, on, label) { const b = document.getElementById(btnId); b.disabled = on; b.innerHTML = on ? '<span class="loading-spinner"></span>' : label; }
+        function showMsg(id, msg, type) { const el = document.getElementById(id); el.textContent = msg; el.className = `auth-msg ${type}`; }
+        async function doSignIn() {
+            const email = document.getElementById('siEmail').value.trim(), password = document.getElementById('siPassword').value;
+            if (!email || !password) { showMsg('siMsg', '⚠️ Please enter your email and password.', 'error'); return; }
+            const online = await checkSupabase();
+            if (!online) { showMsg('siMsg', '⚠️ Cannot reach server. Add this site to your trusted sites in Edge, or open via a local server.', 'error'); return; }
+            setLoading('siSubmit', true, 'Sign In');
+            const { error } = await sb.auth.signInWithPassword({ email, password });
+            setLoading('siSubmit', false, 'Sign In');
+            if (error) { const m = error.message.toLowerCase().includes('invalid') || error.message.toLowerCase().includes('credentials') ? '❌ Incorrect email or password.' : '❌ ' + error.message; showMsg('siMsg', m, 'error'); }
+        }
+        async function doSignUp() {
+            const email = document.getElementById('suEmail').value.trim(), password = document.getElementById('suPassword').value, confirm = document.getElementById('suConfirm').value;
+            if (!email || !password) { showMsg('suMsg', '⚠️ Please fill in all fields.', 'error'); return; }
+            if (password.length < 6) { showMsg('suMsg', '⚠️ Password must be at least 6 characters.', 'error'); return; }
+            if (password !== confirm) { showMsg('suMsg', '❌ Passwords do not match.', 'error'); return; }
+            const online = await checkSupabase();
+            if (!online) { showMsg('suMsg', '⚠️ Cannot reach server. Add this site to your trusted sites in Edge, or open via a local server.', 'error'); return; }
+            setLoading('suSubmit', true, 'Create Account');
+            const { data, error } = await sb.auth.signUp({ email, password });
+            setLoading('suSubmit', false, 'Create Account');
+            if (error) { const m = error.message.toLowerCase().includes('already') ? '❌ An account with this email already exists. Try signing in.' : '❌ ' + error.message; showMsg('suMsg', m, 'error'); return; }
+            if (!data.session) showMsg('suMsg', '✅ Account created! Check your email to confirm, then sign in.', 'success');
+        }
+        document.getElementById('siSubmit').addEventListener('click', doSignIn);
+        document.getElementById('suSubmit').addEventListener('click', doSignUp);
+        document.getElementById('siPassword').addEventListener('keydown', e => { if (e.key === 'Enter') doSignIn(); });
+        document.getElementById('suConfirm').addEventListener('keydown', e => { if (e.key === 'Enter') doSignUp(); });
+        function openAuthModal(tab = 'signin') { setAuthTab(tab); document.getElementById('authModal').classList.add('open'); setTimeout(() => { (tab === 'signin' ? document.getElementById('siEmail') : document.getElementById('suEmail')).focus(); }, 350); }
+        function closeAuthModal() { document.getElementById('authModal').classList.remove('open'); }
+        document.getElementById('authModalClose').addEventListener('click', closeAuthModal);
+        document.getElementById('authModal').addEventListener('click', e => { if (e.target === document.getElementById('authModal')) closeAuthModal(); });
+        document.getElementById('authNavBtn').addEventListener('click', () => { currentUser ? openAccountPanel() : openAuthModal(); });
+
+        // ── SESSION ──
+        async function loadProgress() {
+            if (!currentUser) { userProgress = {}; return; }
+            const online = await checkSupabase();
+            if (!online) { userProgress = {}; return; }
+            const { data, error } = await sb.from('course_progress').select('video_id,status').eq('user_id', currentUser.id);
+            if (!error && data) { userProgress = {}; data.forEach(r => { userProgress[r.video_id] = r.status; }); }
+        }
+        async function saveProgress(videoId, status) {
+            if (!currentUser) { openAuthModal(); return; }
+            if (userProgress[videoId] === status) {
+                // Toggle off
+                userProgress[videoId] = undefined;
+                delete userProgress[videoId];
+                const online = await checkSupabase();
+                if (online) {
+                    await sb.from('course_progress').delete().eq('user_id', currentUser.id).eq('video_id', videoId).catch(() => { });
+                }
+                toast('Progress removed', 'info'); renderGrid();
+                if (document.getElementById('accountPanel').classList.contains('open')) renderPanel();
+                return;
+            }
+            userProgress[videoId] = status;
+            toast(status === 'completed' ? '🎉 Marked as completed!' : '📖 Marked as in progress', 'success');
+            renderGrid();
+            if (document.getElementById('accountPanel').classList.contains('open')) renderPanel();
+            updateModalProgressBtns(videoId);
+            const online = await checkSupabase();
+            if (online) {
+                sb.from('course_progress').upsert({ user_id: currentUser.id, video_id: videoId, status, updated_at: new Date().toISOString() }, { onConflict: 'user_id,video_id' }).catch(() => { });
+            }
+        }
+        function updateAuthUI() {
+            const btn = document.getElementById('authNavBtn');
+            if (currentUser) { const init = (currentUser.email || '?').substring(0, 1).toUpperCase(); btn.className = 'auth-nav-btn signed-in'; btn.innerHTML = `<span class="user-avatar">${init}</span> My Account`; }
+            else { btn.className = 'auth-nav-btn'; btn.innerHTML = '👤 Sign In'; }
+        }
+        let _nullTimer = null;
+        async function handleUserSession(user) {
+            if (user) {
+                currentUser = user; updateAuthUI();
+                if (_nullTimer) { clearTimeout(_nullTimer); _nullTimer = null; }
+                closeAuthModal();
+                await loadProgress(); renderGrid();
+            }
+        }
+        sb.auth.onAuthStateChange(async (event, session) => {
+            if (session?.user) {
+                await handleUserSession(session.user);
+            } else if (event === 'SIGNED_OUT') {
+                // Definitive sign-out — clear immediately
+                if (_nullTimer) { clearTimeout(_nullTimer); _nullTimer = null; }
+                currentUser = null; userProgress = {}; updateAuthUI(); closeAccountPanel(); renderGrid();
+            } else if (!session) {
+                // Transient null during boot — short debounce only
+                if (_nullTimer) clearTimeout(_nullTimer);
+                _nullTimer = setTimeout(() => {
+                    _nullTimer = null;
+                    if (!currentUser) { userProgress = {}; updateAuthUI(); renderGrid(); }
+                }, 500);
+            }
+        });
+        // getSession() handles boot restore inside our inline client; the onAuthStateChange
+        // INITIAL_SESSION event will fire automatically — no extra call needed.
+
+        // ── ACCOUNT PANEL ──
+        function openAccountPanel() { if (!currentUser) { openAuthModal(); return; } renderPanel(); document.getElementById('accountPanel').classList.add('open'); document.getElementById('panelOverlay').classList.add('open'); document.body.style.overflow = 'hidden'; }
+        function closeAccountPanel() { document.getElementById('accountPanel').classList.remove('open'); document.getElementById('panelOverlay').classList.remove('open'); document.body.style.overflow = ''; }
+        document.getElementById('panelClose').addEventListener('click', closeAccountPanel);
+        document.getElementById('panelOverlay').addEventListener('click', closeAccountPanel);
+        function renderPanel() {
+            if (!currentUser) return;
+            const email = currentUser.email || '';
+            document.getElementById('panelAvatar').textContent = email.substring(0, 1).toUpperCase();
+            document.getElementById('panelName').textContent = email.split('@')[0];
+            document.getElementById('panelEmail').textContent = email;
+            const completed = Object.values(userProgress).filter(s => s === 'completed').length;
+            const inProgress = Object.values(userProgress).filter(s => s === 'in-progress').length;
+            const total = videos.length; const pct = Math.round((completed / total) * 100);
+            const circ = 219.9, offset = circ - (pct / 100) * circ;
+            const catStats = {};
+            const allCats = [...new Set(videos.map(v => v.category))];
+            allCats.forEach(cat => { const cv = videos.filter(v => v.category === cat); catStats[cat] = { total: cv.length, done: cv.filter(v => userProgress[v.id] === 'completed').length }; });
+            const completedVideos = videos.filter(v => userProgress[v.id] === 'completed');
+            const inProgressVideos = videos.filter(v => userProgress[v.id] === 'in-progress');
+            document.getElementById('panelBody').innerHTML = `
+    <div><div class="stats-row">
+      <div class="stat-card completed"><div class="stat-value">${completed}</div><div class="stat-label">Completed</div></div>
+      <div class="stat-card in-progress"><div class="stat-value">${inProgress}</div><div class="stat-label">In Progress</div></div>
+      <div class="stat-card total"><div class="stat-value">${total}</div><div class="stat-label">Total</div></div>
+    </div></div>
+    <div class="progress-overview">
+      <div class="progress-ring-wrap">
+        <svg class="progress-ring" width="80" height="80" viewBox="0 0 80 80">
+          <circle class="ring-bg" cx="40" cy="40" r="35"/>
+          <circle class="ring-fill" cx="40" cy="40" r="35" stroke-dasharray="${circ}" stroke-dashoffset="${offset}" style="stroke:${pct > 0 ? 'var(--accent)' : 'transparent'}"/>
+        </svg>
+        <div class="ring-text">${pct}%</div>
+      </div>
+      <div><div class="progress-overview-title">Overall Completion</div><div class="progress-overview-sub">You've completed ${completed} of ${total} courses.<br>Keep it up! 🚀</div></div>
+    </div>
+    ${Object.entries(catStats).some(([, v]) => v.done > 0) ? `<div><div class="panel-section-title">Progress by Category</div><div class="cat-breakdown">
+      ${Object.entries(catStats).filter(([, v]) => v.total > 0 && v.done > 0).map(([cat, stat]) => {
+                const c = catColors[cat] || catColors['Other']; const p = Math.round((stat.done / stat.total) * 100);
+                return `<div><div class="cat-bar-header"><span class="cat-bar-name">${cat}</span><span class="cat-bar-frac">${stat.done}/${stat.total}</span></div><div class="cat-bar-track"><div class="cat-bar-fill" style="width:${p}%;background:${c[0]}"></div></div></div>`;
+            }).join('')}
+    </div></div>`: ''}
+    ${inProgressVideos.length > 0 ? `<div><div class="panel-section-title">📖 Currently Watching (${inProgressVideos.length})</div><div class="panel-course-list">
+      ${inProgressVideos.map(v => `<div class="panel-course-item"><img class="panel-course-thumb" src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" referrerpolicy="no-referrer" onerror="this.style.background='var(--surface)';this.src=''" alt="${esc(v.title)}"><div class="panel-course-info"><div class="panel-course-title">${esc(v.title)}</div><div class="panel-course-cat">${esc(v.category)}</div></div><span class="panel-course-status status-in-progress">Watching</span></div>`).join('')}
+    </div></div>`: ''}
+    ${completedVideos.length > 0 ? `<div><div class="panel-section-title">✅ Completed (${completedVideos.length})</div><div class="panel-course-list">
+      ${completedVideos.map(v => `<div class="panel-course-item"><img class="panel-course-thumb" src="https://img.youtube.com/vi/${v.id}/mqdefault.jpg" referrerpolicy="no-referrer" onerror="this.style.background='var(--surface)';this.src=''" alt="${esc(v.title)}"><div class="panel-course-info"><div class="panel-course-title">${esc(v.title)}</div><div class="panel-course-cat">${esc(v.category)}</div></div><span class="panel-course-status status-completed">Done ✓</span></div>`).join('')}
+    </div></div>`: ''}
+    ${completed === 0 && inProgress === 0 ? `<div style="text-align:center;padding:24px;background:var(--surface2);border-radius:14px;border:1px dashed var(--border)"><div style="font-size:2rem;margin-bottom:8px">🎯</div><div style="font-family:'Syne',sans-serif;font-weight:700;color:var(--text);margin-bottom:6px">No progress yet</div><div style="font-size:.8rem;color:var(--text-muted)">Start watching courses and mark your progress.</div></div>` : ''}
+    <button class="panel-signout" id="panelSignOut">Sign Out</button>
+  `;
+            document.getElementById('panelSignOut').addEventListener('click', async () => {
+                await sb.auth.signOut(); currentUser = null; userProgress = {}; updateAuthUI(); closeAccountPanel(); renderGrid(); toast('Signed out', 'info');
+            });
+        }
+
+        // ── ADD COURSE MODAL ──────────────────────────────────────────
+        const QUICK_ICONS = ['🎓', '🖥️', '📱', '🧠', '⚙️', '🔐', '🗄️', '📊', '🐍', '☁️', '🎮', '🧪', '🤖', '🦀', '🐳', '🐹', '📐', '⚡', '💚', '📘', '🛠️', '🏗️', '⌨️', '🧩', '👁️', '☕', '🕵️', '▲', '🎯', '📚'];
+
+        function extractYtId(input) {
+            input = input.trim();
+            const patterns = [/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([A-Za-z0-9_-]{11})/, /^([A-Za-z0-9_-]{11})$/];
+            for (const p of patterns) { const m = input.match(p); if (m) return m[1]; }
+            return null;
+        }
+
+        let previewTimer = null;
+        document.getElementById('acYtUrl').addEventListener('input', function () {
+            clearTimeout(previewTimer);
+            previewTimer = setTimeout(() => updateYtPreview(this.value), 600);
+        });
+
+        function updateYtPreview(val) {
+            const vid = extractYtId(val);
+            const preview = document.getElementById('acPreview');
+            const bar = document.getElementById('acLoadingBar');
+            if (!vid) { preview.classList.remove('visible'); bar.classList.remove('visible'); return; }
+            bar.classList.add('visible');
+            const img = document.getElementById('acPreviewImg');
+            img.src = `https://img.youtube.com/vi/${vid}/maxresdefault.jpg`;
+            img.onload = () => { bar.classList.remove('visible'); preview.classList.add('visible'); document.getElementById('acPreviewInfo').textContent = `Video ID: ${vid} — Thumbnail loaded ✓`; };
+            img.onerror = () => { img.src = `https://img.youtube.com/vi/${vid}/hqdefault.jpg`; img.onerror = () => { bar.classList.remove('visible'); preview.classList.remove('visible'); }; };
+        }
+
+        function openAddCourseModal() {
+            document.getElementById('addCourseModal').classList.add('open');
+            document.getElementById('addFormMsg').className = 'add-form-msg';
+            ['acYtUrl', 'acTitle', 'acSummary', 'acDuration', 'acIcon'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('acCategory').value = '';
+            document.getElementById('acPreview').classList.remove('visible');
+            document.getElementById('acLoadingBar').classList.remove('visible');
+            // Build icon grid
+            const grid = document.getElementById('iconGrid'); grid.innerHTML = '';
+            QUICK_ICONS.forEach(ic => {
+                const btn = document.createElement('button'); btn.className = 'icon-opt'; btn.type = 'button'; btn.textContent = ic;
+                btn.addEventListener('click', () => { document.getElementById('acIcon').value = ic; document.querySelectorAll('.icon-opt').forEach(b => b.classList.remove('selected')); btn.classList.add('selected'); });
+                grid.appendChild(btn);
+            });
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => document.getElementById('acYtUrl').focus(), 350);
+        }
+
+        function closeAddCourseModal() {
+            document.getElementById('addCourseModal').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        document.getElementById('addCourseNavBtn').addEventListener('click', openAddCourseModal);
+        document.getElementById('addCourseClose').addEventListener('click', closeAddCourseModal);
+        document.getElementById('addCourseCancel').addEventListener('click', closeAddCourseModal);
+        document.getElementById('addCourseModal').addEventListener('click', e => { if (e.target === document.getElementById('addCourseModal')) closeAddCourseModal(); });
+
+        document.getElementById('addCourseSave').addEventListener('click', async () => {
+            const urlVal = document.getElementById('acYtUrl').value.trim();
+            const title = document.getElementById('acTitle').value.trim();
+            const category = document.getElementById('acCategory').value;
+            const summary = document.getElementById('acSummary').value.trim();
+            const durVal = document.getElementById('acDuration').value;
+            const icon = document.getElementById('acIcon').value.trim() || '🎓';
+            const msgEl = document.getElementById('addFormMsg');
+
+            function showAddMsg(msg, type) { msgEl.textContent = msg; msgEl.className = `add-form-msg ${type}`; }
+
+            const videoId = extractYtId(urlVal);
+            if (!videoId) { showAddMsg('⚠️ Please enter a valid YouTube URL or video ID.', 'error'); return; }
+            if (!title) { showAddMsg('⚠️ Title is required.', 'error'); return; }
+            if (!category) { showAddMsg('⚠️ Please select a category.', 'error'); return; }
+            if (!summary) { showAddMsg('⚠️ Description is required.', 'error'); return; }
+
+            // Check for duplicate
+            if (videos.find(v => v.id === videoId)) { showAddMsg('⚠️ This video is already in the library.', 'error'); return; }
+
+            const btn = document.getElementById('addCourseSave');
+            btn.disabled = true; btn.innerHTML = '<span class="loading-spinner"></span> Saving…';
+
+            const courseData = {
+                video_id: videoId,
+                title,
+                category,
+                summary,
+                description: summary,
+                duration_minutes: durVal ? parseInt(durVal) : 0,
+                icon,
+                created_at: new Date().toISOString(),
+            };
+
+            const { data, error } = await addCourseToSupabase(courseData);
+            btn.disabled = false; btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13"/><polyline points="7 3 7 8 15 8"/></svg> Save Course`;
+
+            if (error) {
+                if (error.offline) {
+                    showAddMsg('⚠️ Supabase unreachable — course added locally for this session only. To persist courses, add your Supabase domain to Edge trusted sites.', 'success');
+                } else if (error.code === '42P01' || error.message.toLowerCase().includes('does not exist')) {
+                    showAddMsg('ℹ️ Courses table not found in Supabase — added locally. See README for table setup.', 'success');
+                } else {
+                    showAddMsg('❌ Error saving: ' + error.message, 'error'); return;
+                }
+            } else {
+                showAddMsg('✅ Course added successfully!', 'success');
+            }
+
+            // Add to local state
+            const newCourse = { id: videoId, title, category, summary, dur: durVal ? parseInt(durVal) : 0, icon };
+            videos.unshift(newCourse);
+            buildCategories();
+            renderGrid();
+            toast('🎉 Course "' + title + '" added!', 'success');
+            setTimeout(() => closeAddCourseModal(), 1200);
+        });
+
+        // ── THEME ──
+        let dark = true;
+        document.getElementById('themeBtn').addEventListener('click', () => {
+            dark = !dark; document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+            document.getElementById('themeBtn').textContent = dark ? '🌙' : '☀️';
+        });
+
+        // ── CATEGORIES ──
+        function buildCategories() {
+            const catCount = {}; videos.forEach(v => { catCount[v.category] = (catCount[v.category] || 0) + 1; });
+            const allCats = ['All', ...new Set(videos.map(v => v.category))];
+            const catList = document.getElementById('categoryList'); catList.innerHTML = '';
+            allCats.forEach(cat => {
+                const btn = document.createElement('button');
+                btn.className = 'cat-btn' + (cat === activeCategory ? ' active' : '');
+                btn.innerHTML = `<span class="cat-dot"></span>${cat}<span class="cat-count">${cat === 'All' ? videos.length : catCount[cat] || 0}</span>`;
+                applyColorVars(btn, cat);
+                btn.addEventListener('click', () => { activeCategory = cat; document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); renderGrid(); });
+                catList.appendChild(btn);
+            });
+        }
+        document.getElementById('collapseBtn').addEventListener('click', () => {
+            sidebarOpen = !sidebarOpen; document.getElementById('categoryList').classList.toggle('collapsed', !sidebarOpen);
+            document.getElementById('collapseIcon').textContent = sidebarOpen ? '▲' : '▼';
+        });
+
+        // ── SEARCH ──
+        function syncSearch(val) { searchQuery = val; document.getElementById('searchDesktop').value = val; document.getElementById('searchMobile').value = val; renderGrid(); }
+        document.getElementById('searchDesktop').addEventListener('input', e => syncSearch(e.target.value));
+        document.getElementById('searchMobile').addEventListener('input', e => syncSearch(e.target.value));
+
+        // ── GRID ──
+        function getFiltered() {
+            const q = searchQuery.toLowerCase();
+            return videos.filter(v => {
+                const mc = activeCategory === 'All' || v.category === activeCategory;
+                const mq = !q || v.title.toLowerCase().includes(q) || v.summary.toLowerCase().includes(q) || v.category.toLowerCase().includes(q);
+                return mc && mq;
+            });
+        }
+
+        function updateMetrics() {
+            const total = videos.length;
+            const totalMins = videos.reduce((s, v) => s + (v.dur || 0), 0);
+            const h = Math.floor(totalMins / 60), m = totalMins % 60;
+            const allCats = new Set(videos.map(v => v.category));
+            document.getElementById('metricCourses').textContent = total;
+            document.getElementById('metricHours').textContent = h + 'h' + (m > 0 ? ' ' + m + 'm' : '');
+            document.getElementById('metricCourseSub').textContent = 'across ' + allCats.size + ' categories';
+            document.getElementById('totalBadge').textContent = total + ' Courses';
+            if (currentUser) {
+                const completed = Object.values(userProgress).filter(s => s === 'completed').length;
+                const inProg = Object.values(userProgress).filter(s => s === 'in-progress').length;
+                const pct = Math.round((completed / total) * 100);
+                const card = document.getElementById('metricProgressCard'); card.style.display = '';
+                document.getElementById('metricsBanner').classList.add('has-progress');
+                document.getElementById('metricPct').textContent = pct + '%';
+                document.getElementById('metricProgSub').textContent = completed + ' of ' + total + ' completed' + (inProg > 0 ? ' · ' + inProg + ' in progress' : '');
+                document.getElementById('metricProgFill').style.width = pct + '%';
+            } else {
+                document.getElementById('metricProgressCard').style.display = 'none';
+                document.getElementById('metricsBanner').classList.remove('has-progress');
+            }
+        }
+
+        function renderGrid() {
+            const filtered = getFiltered(); const grid = document.getElementById('videoGrid');
+            document.getElementById('mainTitle').textContent = activeCategory === 'All' ? 'All Courses' : activeCategory;
+            document.getElementById('resultsCount').textContent = filtered.length + ' result' + (filtered.length !== 1 ? 's' : '');
+            grid.innerHTML = '';
+            if (!filtered.length) { grid.innerHTML = `<div class="empty"><div class="empty-icon">🔍</div><h3>No courses found</h3><p>Try a different search or category.</p></div>`; updateMetrics(); return; }
+            filtered.forEach((v, i) => {
+                const status = userProgress[v.id];
+                const card = document.createElement('div'); card.className = 'card';
+                card.style.animationDelay = Math.min(i * .06, .5) + 's';
+                const pa = currentUser ? `<div class="progress-actions">
+      <button class="prog-btn ${status === 'in-progress' ? 'in-progress' : ''}" data-id="${v.id}" data-status="in-progress">${status === 'in-progress' ? '📖 Watching' : '📖 Start'}</button>
+      <button class="prog-btn ${status === 'completed' ? 'done' : ''}" data-id="${v.id}" data-status="completed">${status === 'completed' ? '✅ Done' : '✓ Complete'}</button>
+    </div>`: '';
+                card.innerHTML = `
+      <div class="thumb">
+        <img src="https://img.youtube.com/vi/${v.id}/maxresdefault.jpg" alt="${esc(v.title)}" loading="lazy" referrerpolicy="no-referrer" crossorigin="anonymous"
+          onerror="this.onerror=null;this.src='https://img.youtube.com/vi/${v.id}/hqdefault.jpg';this.onerror=()=>handleImgError(this,'${v.title.replace(/'/g, "\\'")}','${v.icon}')">
+        <div class="thumb-overlay"></div>
+        <div class="play-btn"><div class="play-circle"><div class="play-icon"></div></div></div>
+        <span class="thumb-tag">${esc(v.category)}</span>
+        ${status === 'completed' ? '<span class="completed-badge visible">✓ Completed</span>' : ''}
+        ${v.dur ? `<span class="dur-badge">⏱ ${fmtDur(v.dur)}</span>` : ''}
+      </div>
+      <div class="card-body">
+        <div class="card-top"><h3 class="card-title">${esc(v.title)}</h3><span class="card-icon">${v.icon}</span></div>
+        <p class="card-desc">${esc(v.summary)}</p>
+        <div class="card-footer">
+          <button class="watch-btn">▶ Watch Now</button>
+          <a class="ext-btn" href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener noreferrer" title="Open in YouTube">↗</a>
+        </div>
+        ${pa}
+      </div>
+      ${status ? `<div class="card-progress-bar"><div class="card-progress-fill" style="width:${status === 'completed' ? 100 : 50}%"></div></div>` : ''}
+    `;
+                const tag = card.querySelector('.thumb-tag'); if (tag) applyColorVars(tag, v.category);
+                card.querySelector('.thumb').addEventListener('click', () => openModal(v.id, v.title));
+                card.querySelector('.play-circle').addEventListener('click', e => { e.stopPropagation(); openModal(v.id, v.title); });
+                card.querySelector('.watch-btn').addEventListener('click', () => openModal(v.id, v.title));
+                card.querySelectorAll('.prog-btn').forEach(btn => btn.addEventListener('click', e => { e.stopPropagation(); saveProgress(btn.dataset.id, btn.dataset.status); }));
+                grid.appendChild(card);
+            });
+            updateMetrics();
+        }
+
+        function handleImgError(img, title, icon) {
+            img.style.display = 'none';
+            const p = document.createElement('div');
+            p.style.cssText = 'position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:16px;text-align:center;';
+            p.innerHTML = `<span style="font-size:2.2rem">${icon}</span><span style="font-family:'Syne',sans-serif;font-size:.78rem;font-weight:700;color:rgba(255,255,255,.75);line-height:1.3;max-width:180px">${esc(title)}</span>`;
+            img.parentElement.appendChild(p);
+        }
+
+        // ── VIDEO MODAL ──
+        const modal = document.getElementById('modal'); const iframe = document.getElementById('modalIframe');
+        function updateModalProgressBtns(videoId) {
+            const status = userProgress[videoId];
+            document.querySelectorAll('#modalProgBtns .modal-prog-btn').forEach(btn => {
+                btn.className = 'modal-prog-btn';
+                if (btn.dataset.status === 'in-progress' && status === 'in-progress') btn.classList.add('active-in-progress');
+                if (btn.dataset.status === 'completed' && status === 'completed') btn.classList.add('active-completed');
+            });
+        }
+        function openModal(id, title) {
+            activeVideoId = id; document.getElementById('modalTitle').textContent = title;
+            iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1`;
+            modal.classList.add('open'); document.body.style.overflow = 'hidden';
+            const footer = document.getElementById('modalProgBtns'); const label = document.getElementById('modalFooterLabel');
+            if (currentUser) {
+                label.textContent = 'Track your progress:'; const status = userProgress[id];
+                footer.innerHTML = `<button class="modal-prog-btn ${status === 'in-progress' ? 'active-in-progress' : ''}" data-status="in-progress" data-id="${id}">📖 In Progress</button>
+      <button class="modal-prog-btn ${status === 'completed' ? 'active-completed' : ''}" data-status="completed" data-id="${id}">✅ Completed</button>`;
+                footer.querySelectorAll('.modal-prog-btn').forEach(btn => btn.addEventListener('click', () => saveProgress(btn.dataset.id, btn.dataset.status)));
+            } else {
+                label.innerHTML = '';
+                footer.innerHTML = `<span class="no-auth-msg">✨ <a href="#" style="color:var(--accent)" id="modalSignInLink">Sign in</a> to track your progress</span>`;
+                document.getElementById('modalSignInLink').addEventListener('click', e => { e.preventDefault(); closeModal(); openAuthModal(); });
+            }
+        }
+        function closeModal() { modal.classList.remove('open'); iframe.src = ''; document.body.style.overflow = ''; activeVideoId = null; }
+        document.getElementById('modalClose').addEventListener('click', closeModal);
+        modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeAuthModal(); closeAddCourseModal(); } });
+        document.getElementById('logoHome').addEventListener('click', () => {
+            activeCategory = 'All'; searchQuery = ''; syncSearch('');
+            document.querySelectorAll('.cat-btn').forEach((b, i) => b.classList.toggle('active', i === 0));
+        });
+
+        // ── INIT ──
+        loadCourses();
+    </script>
+</body>
+
+</html>

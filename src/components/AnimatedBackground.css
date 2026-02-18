@@ -1,0 +1,135 @@
+.animated-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.bg-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: .18;
+}
+
+.bg-orb.orb-a {
+    width: 500px;
+    height: 500px;
+    top: -120px;
+    left: -100px;
+    background: radial-gradient(circle, #6366f1 0%, transparent 70%);
+    animation: orbFloat1 20s ease-in-out infinite alternate;
+}
+
+.bg-orb.orb-b {
+    width: 400px;
+    height: 400px;
+    bottom: -80px;
+    right: -80px;
+    background: radial-gradient(circle, #8b5cf6 0%, transparent 70%);
+    animation: orbFloat2 16s ease-in-out infinite alternate;
+}
+
+.bg-orb.orb-c {
+    width: 300px;
+    height: 300px;
+    top: 40%;
+    left: 50%;
+    background: radial-gradient(circle, #06b6d4 0%, transparent 70%);
+    animation: orbFloat3 24s ease-in-out infinite alternate;
+    opacity: .1;
+}
+
+[data-theme="light"] .bg-orb {
+    opacity: .08;
+}
+
+@keyframes orbFloat1 {
+    from {
+        transform: translate(0, 0) scale(1);
+    }
+
+    to {
+        transform: translate(60px, 40px) scale(1.1);
+    }
+}
+
+@keyframes orbFloat2 {
+    from {
+        transform: translate(0, 0) scale(1);
+    }
+
+    to {
+        transform: translate(-50px, -30px) scale(1.15);
+    }
+}
+
+@keyframes orbFloat3 {
+    from {
+        transform: translate(0, 0) scale(1);
+    }
+
+    to {
+        transform: translate(80px, -60px) scale(.9);
+    }
+}
+
+.bg-particles {
+    position: absolute;
+    inset: 0;
+}
+
+.bg-particle {
+    position: absolute;
+    width: 3px;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 50%;
+    opacity: .3;
+    animation: dotFloat 4s ease-in-out infinite;
+}
+
+.p-1 {
+    top: 15%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.p-2 {
+    top: 30%;
+    left: 75%;
+    animation-delay: .6s;
+}
+
+.p-3 {
+    top: 55%;
+    left: 25%;
+    animation-delay: 1.2s;
+}
+
+.p-4 {
+    top: 70%;
+    left: 60%;
+    animation-delay: 1.8s;
+}
+
+.p-5 {
+    top: 85%;
+    left: 40%;
+    animation-delay: 2.4s;
+}
+
+.p-6 {
+    top: 45%;
+    left: 90%;
+    animation-delay: 3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .bg-orb,
+    .bg-particle {
+        animation: none !important;
+    }
+}
