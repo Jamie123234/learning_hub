@@ -39,7 +39,7 @@ export const STATIC_COURSES = [
     { id: 'VPvVD8t02U8', dur: 2199, title: 'Flutter Course for Beginners', category: 'Mobile Development', summary: "Cross-platform mobile apps with Google's Flutter and Dart.", icon: '📱' },
     { id: '9UKCv9T_rIo', dur: 115, title: 'React Native & Expo Router', category: 'Mobile Development', summary: 'Build a full-featured meditation app using React Native and Expo Router.', icon: '📱' },
     // ── Software Engineering ──
-    { id: '5rNk7m_zlAg', dur: 762, title: 'TDD Revisited - Ian Cooper', category: 'Software Engineering', summary: 'Deep dive into TDD — original purpose, common misconceptions, and modern application.', icon: '⚙️' },
+    { id: '5rNk7m_zlAg', dur: 762, title: 'Spring Boot Tutorial - Ian Cooper', category: 'Programming', summary: 'Complete Spring Boot course — building REST APIs, dependency injection, and modern Java application development.', icon: '🍃' },
     { id: 'blKkRoZPxLc', dur: 170, title: 'Advanced Software Concepts', category: 'Software Engineering', summary: 'Advanced programming paradigms and architectural patterns for scalable systems.', icon: '🧩' },
     { id: 'mAFoROnOfHs', dur: 148, title: 'Git & GitHub Full Course', category: 'Software Engineering', summary: 'Complete Git and GitHub guide — commits, branching, merging, and pull requests.', icon: '🔀' },
     // ── Cybersecurity ──

@@ -256,3 +256,30 @@
 .progress-fill.completed {
     background: linear-gradient(90deg, #10b981, #34d399);
 }
+
+/* ── Touch devices: always show play overlay ── */
+@media (hover: none) {
+    .thumb-overlay {
+        opacity: 1;
+        background: rgba(0, 0, 0, .25);
+    }
+
+    .play-circle {
+        transform: scale(.9);
+    }
+}
+
+@media(max-width:640px) {
+    .card-body {
+        padding: 14px 16px;
+    }
+
+    .cta-btn {
+        padding: 12px 0;
+        font-size: .82rem;
+    }
+
+    .card-title {
+        font-size: .88rem;
+    }
+}

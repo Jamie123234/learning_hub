@@ -265,3 +265,35 @@
         flex-direction: column;
     }
 }
+
+@media(max-width:480px) {
+    .addcourse-overlay {
+        padding: 0;
+        align-items: flex-end;
+    }
+
+    .addcourse-modal {
+        border-radius: 18px 18px 0 0;
+        max-height: 95vh;
+    }
+
+    .ac-header {
+        padding: 14px 16px;
+    }
+
+    .ac-form {
+        padding: 14px;
+        gap: 12px;
+    }
+
+    .ac-actions {
+        flex-direction: column;
+    }
+
+    .ac-cancel,
+    .ac-submit {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+    }
+}

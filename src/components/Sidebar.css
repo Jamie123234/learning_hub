@@ -183,6 +183,31 @@
 
 @media(max-width:640px) {
     .mobile-search {
-        display: block;
+        display: none;
+    }
+}
+
+@media(max-width:480px) {
+    .category-list {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding-bottom: 4px;
+    }
+
+    .category-list::-webkit-scrollbar {
+        display: none;
+    }
+
+    .cat-btn {
+        font-size: .7rem;
+        padding: 5px 10px;
+        flex-shrink: 0;
+    }
+
+    .sidebar-section {
+        padding: 12px;
+        margin-bottom: 16px;
     }
 }

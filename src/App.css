@@ -17,6 +17,12 @@
   }
 }
 
+@media(max-width:400px) {
+  .app-main {
+    padding: 14px 10px 60px;
+  }
+}
+
 .content-col {
   flex: 1;
   min-width: 0;
